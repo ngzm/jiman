@@ -1,0 +1,100 @@
+######################################
+# CREATE categories AND jimans MODEL
+######################################
+
+（参考）
+https://qiita.com/Kohei_Kishimoto0214/items/cb9a3d3da57708fb52c9
+
+# -----------
+# categories
+# -----------
+% be rails g model category label:string 
+% vim db/migrate/20200503094721_create_categories.rb
+```
+class CreateCategories < ActiveRecord::Migration[6.0]
+  def change
+    create_table :categories do |t|
+      t.string :labeli, null: false, unique: true
+
+      t.timestamps
+    end
+  end
+end
+```
+% be rails db:migrate
+
+# -----------
+# jimans
+# -----------
+% be rails g model jiman title:string description:string url:string image:string access:integer star:integer
+% vim db/migrate/20200503095210_create_jimen.rb
+```
+class CreateJimen < ActiveRecord::Migration[6.0]
+  def change
+    create_table :jimen do |t|
+      t.string :title, null: false
+      t.string :description, null:false
+      t.string :url, null: false
+      t.string :image, null: false
+      t.integer :access, null: false, default: 0
+      t.integer :star, null: false, default: 0
+
+      t.timestamps
+    end
+  end
+end
+```
+% be rails db:migrate
+
+# -----------
+# category_jimans
+# -----------
+% be rails g model category_jiman category:references jiman:references
+% vim db/migrate/20200503095525_create_category_jimen.rb
+```
+class CreateCategoryJimen < ActiveRecord::Migration[6.0]
+  def change
+    create_table :category_jimen do |t|
+      t.references :category, null: false, foreign_key: true
+      t.references :jiman, null: false, foreign_key: true
+
+      t.timestamp :created_at
+    end
+  end
+end
+```
+% be rails db:migrate
+
+
+# -----------
+# model/category.rb
+# -----------
+```
+class Category < ApplicationRecord
+  has_many :jimans, through: :category_jimans
+  has_many :category_jimans
+end
+```
+
+# -----------
+# model/jiman.rb
+# -----------
+```
+class Jiman < ApplicationRecord
+  has_many :categories, through: :category_jimans
+  has_many :category_jimans
+end
+```
+
+# -----------
+# model/category_jiman.rb
+# -----------
+```
+class CategoryJiman < ApplicationRecord
+  belongs_to :category
+  belongs_to :jiman
+end
+```
+
+
+
