@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment: MyText
+  star: MyString
+  integer: MyString
+  user: one
+  jiman: one
+
+two:
+  comment: MyText
+  star: MyString
+  integer: MyString
+  user: two
+  jiman: two

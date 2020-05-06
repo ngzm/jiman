@@ -5,7 +5,9 @@
       <p class="mt-1 mx-2">{{ item.access }} 回</p>
     </v-card-text>
     <v-card-text>
-      <h5 class="subtitle-1 font-weight-bold">お気に入り</h5>
+      <h5 class="subtitle-1 font-weight-bold">
+        お気に入り度： {{ formatStar }}
+      </h5>
       <v-rating
         v-model="intStar"
         dense
@@ -14,8 +16,9 @@
         color="orange"
       />
       <p class="mt-1 mx-2">
-        <span v-if="item.star">( {{ intStar }} )</span>
-        <span v-else>お気に入りはまだありませんでした</span>
+        <span v-if="item.star < 1">
+          お気に入りはまだありませんでした
+        </span>
       </p>
     </v-card-text>
     <v-card-actions>
@@ -31,19 +34,15 @@
       </v-btn>
     </v-card-actions>
     <v-card-text class="pt-4">
-      <h5 class="subtitle-1 font-weight-bold">最新コメント</h5>
-      <div v-if="item.reviews && item.reviews.length > 0" class="mt-3">
-        <v-expansion-panels multiple>
-          <v-expansion-panel v-for="(rv, index) in item.reviews" :key="index">
+      <h5 class="subtitle-1 font-weight-bold">最新お気に入りやコメント</h5>
+      <div v-if="reviews && reviews.length > 0" class="mt-3">
+        <v-expansion-panels focusable multiple>
+          <v-expansion-panel v-for="(rv, index) in reviews" :key="index">
             <v-expansion-panel-header>
-              {{ rv.user }}
-              <span>
-                <v-icon
-                  v-for="n in rv.star"
-                  :key="n"
-                  color="yellow darken-2"
-                  class="star"
-                >
+              {{ rv.user_name }}
+              <!-- Can not use v-rating here -->
+              <span class="ml-3">
+                <v-icon v-for="n in rv.star" :key="n" small color="yellow">
                   mdi-star
                 </v-icon>
               </span>
@@ -64,7 +63,8 @@
 <script>
 export default {
   props: {
-    item: { default: () => {}, type: Object }
+    item: { default: () => {}, type: Object },
+    reviews: { default: () => [], type: Array }
   },
   computed: {
     intStar() {

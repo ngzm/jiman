@@ -15,11 +15,21 @@
               <ContentDetail :item="jiman" />
             </v-col>
             <v-col cols="12" md="6">
-              <ContentReview :item="jiman" @onReview="onReview" />
+              <ContentReview
+                :item="jiman"
+                :reviews="reviews"
+                @onReview="onReview"
+              />
             </v-col>
           </v-row>
         </v-col>
       </v-row>
+      <ReviewDialog
+        :dialog="dialog"
+        :set-dialog="setDialog"
+        :title="jiman.title"
+        @onRegist="registReview"
+      />
     </v-col>
   </v-row>
 </template>
@@ -28,28 +38,40 @@
 import ContentTopView from '~/components/contents/ContentTopView'
 import ContentDetail from '~/components/contents/ContentDetail'
 import ContentReview from '~/components/contents/ContentReview'
+import ReviewDialog from '~/components/contents/ReviewDialog'
 
 export default {
   components: {
     ContentTopView,
     ContentDetail,
-    ContentReview
+    ContentReview,
+    ReviewDialog
   },
   validate({ params }) {
     return /^\d+$/.test(params.cid) && /^\d+$/.test(params.id)
   },
   async asyncData(context) {
-    const data = await context.$axios
+    let jdata = await context.$axios
       .$get(`${context.env.ENDPOINT_URL}/api/jimen/${context.params.id}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    return data ? { jiman: data } : { jiman: {} }
+    if (!jdata) jdata = {}
+
+    let rdata = await context.$axios
+      .$get(`${context.env.ENDPOINT_URL}/api/reviews/list/${context.params.id}`)
+      .catch((err) => {
+        console.log(`error !! ${err}`)
+      })
+    if (!rdata) rdata = []
+
+    return { jiman: jdata, reviews: rdata }
   },
   data() {
     return {
       cid: this.$route.params.cid,
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      dialog: false
     }
   },
   computed: {
@@ -78,6 +100,9 @@ export default {
     }
   },
   methods: {
+    setDialog(flg) {
+      this.dialog = flg
+    },
     onJump() {
       this.upAccess()
       if (process.client) {
@@ -85,7 +110,7 @@ export default {
       }
     },
     onReview() {
-      console.log('onReview!!')
+      this.setDialog(true)
     },
     async upAccess() {
       const data = await this.$axios
@@ -94,6 +119,30 @@ export default {
           console.log(`error !! ${err}`)
         })
       this.jiman = data
+    },
+    async registReview(review) {
+      await this.$axios
+        .$post(`${process.env.ENDPOINT_URL}/api/reviews/${this.id}`, review)
+        .catch((err) => {
+          console.log(`error !! ${err}`)
+        })
+
+      let jdata = await this.$axios
+        .$get(`${process.env.ENDPOINT_URL}/api/jimen/${this.id}`)
+        .catch((err) => {
+          console.log(`error !! ${err}`)
+        })
+      if (!jdata) jdata = {}
+      this.jiman = jdata
+
+      let rdata = await this.$axios
+        .$get(`${process.env.ENDPOINT_URL}/api/reviews/list/${this.id}`)
+        .catch((err) => {
+          console.log(`error !! ${err}`)
+        })
+      if (!rdata) rdata = []
+      this.reviews = rdata
+      this.setDialog(false)
     }
   }
 }

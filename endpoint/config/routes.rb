@@ -7,10 +7,15 @@ Rails.application.routes.draw do
     # Api access to jimen resources
     resources :jimen, only: %i[index show], format: false
 
-    # Api access to games searched by category id
+    # Api access to jimen searched by category_id
     get 'jimen/list/:category_id', to: 'jimen#list', format: false
 
     # Api access to jump detail pages, meaning count-up access counter.
     post 'jimen/jump/:id', to: 'jimen#jump', format: false
+
+    # Api access to reviews searched by jiman_id
+    get 'reviews/:jiman_id', to: 'reviews#show', format: false
+    get 'reviews/list/:jiman_id', to: 'reviews#list', format: false
+    post 'reviews/:jiman_id', to: 'reviews#save', format: false
   end
 end

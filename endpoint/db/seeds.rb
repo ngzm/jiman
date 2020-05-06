@@ -32,7 +32,7 @@ jiman1 = Jiman.create!({
   title: "Longlivenet",
   description: "ロングリブネットのウェブサイトです",
   url: "https://www.longlivenet.com/",
-  image: "http://localhost:3000/test/IMG_0301.jpg",
+  image: "http://localhost:4000/test/IMG_0301.jpg",
   access: 120,
   star: 4.3
 })
@@ -40,7 +40,7 @@ jiman2 = Jiman.create!({
   title: "テスト2",
   description: "テストその2です",
   url: "https://www.longlivenet.com/",
-  image: "http://localhost:3000/test/IMG_0157.jpg",
+  image: "http://localhost:4000/test/IMG_0157.jpg",
   access: 43,
   star: 2.3
 })
@@ -48,7 +48,7 @@ jiman3 = Jiman.create!({
   title: "タイトルテスト3",
   description: "ジマンのテストその3です",
   url: "https://www.longlivenet.com/",
-  image: "http://localhost:3000/test/IMG_0791.jpg",
+  image: "http://localhost:4000/test/IMG_0791.jpg",
   access: 10,
   star: 3.1
 })
@@ -56,13 +56,13 @@ jiman4 = Jiman.create!({
   title: "面白サイト",
   description: "楽しいサイトを作成しました！ぜひ見てください",
   url: "https://www.longlivenet.com/",
-  image: "http://localhost:3000/test/IMG_0792.jpg"
+  image: "http://localhost:4000/test/IMG_0792.jpg"
 })
 jiman5 = Jiman.create!({
   title: "キタキタNo5",
   description: "キタキターお待ちかねでした！！",
   url: "https://www.longlivenet.com/",
-  image: "http://localhost:3000/test/IMG_0893.jpg"
+  image: "http://localhost:4000/test/IMG_0893.jpg"
 })
 
 # リレーション設定
@@ -79,3 +79,8 @@ jiman4.categories << cate1
 jiman4.save!
 jiman5.categories << cate1
 jiman5.save!
+
+
+User.create!([
+  { name: "naoki", full_name: "Naoki Nagazumi", email: "nao@zumin.net" }
+])

@@ -2,8 +2,10 @@
 
 # Jiman model Class
 class Jiman < ApplicationRecord
-  has_many :category_jimen
+  has_many :category_jimen, dependent: :destroy
   has_many :categories, through: :category_jimen
+  has_many :reviews, dependent: :destroy
+  has_many :users, through: :reviews
 
   validates :title, presence: true
   validates :description, presence: true

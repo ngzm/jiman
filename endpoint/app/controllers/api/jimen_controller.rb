@@ -24,7 +24,8 @@ module Api
     end
 
     def list
-      @jimen = Jiman.includes(:categories).where(categories: { id: @category_id})
+      @jimen = Jiman.includes(:categories)
+                    .where(categories: { id: @category_id })
       raise RecordNotFound, 'No contents of jiman found' if @jimen.empty?
 
       render 'index', formats: :json, handlers: 'jbuilder'
