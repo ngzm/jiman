@@ -38,22 +38,28 @@ module Api
   # jiman base controller
   #
   class ApiController < ApplicationController
+    rescue_from StandardError, with: :handle_500_error
+    rescue_from ActiveRecord::RecordInvalid, with: :handle_422_error
+    # rescue_from Auths::Error::AuthError, with: :handle_auth_error
+    rescue_from RecordNotFound, with: :handle_404_error
+    rescue_from BusinessError, with: :handle_business_error
+
     private
 
-    # Check authenticated
-    def authenticated?
-      raise Auths::Error::Unauthorized, 'Faild to authenticate' \
-        unless authenticate_token
-    end
+    # # Check authenticated
+    # def authenticated?
+    #   raise Auths::Error::Unauthorized, 'Faild to authenticate' \
+    #     unless authenticate_token
+    # end
 
-    # Check authenticated token
-    def authenticate_token
-      authenticate_with_http_token do |token|
-        user = authenticate_id_token(token)
-        @user_id = user.id
-        return true
-      end
-    end
+    # # Check authenticated token
+    # def authenticate_token
+    #   authenticate_with_http_token do |token|
+    #     user = authenticate_id_token(token)
+    #     @user_id = user.id
+    #     return true
+    #   end
+    # end
 
     # Standard Error handler
     def handle_500_error(err)
@@ -71,6 +77,14 @@ module Api
         error_datas.push(level: 'warning', message: msg)
       end
       render json: error_datas, status: 422
+    end
+
+    # NOT FOUND Error handler (It's OK to include BUSINESS ERROR)
+    def handle_404_error(err)
+      logger.error("404 ERROR: status: #{err.http_status}: #{err.message}")
+      error_datas = []
+      error_datas.push(level: err.error_level, message: err.message)
+      render json: error_datas, status: 404
     end
 
     # Auth Error handler

@@ -9,5 +9,8 @@ Rails.application.routes.draw do
 
     # Api access to games searched by category id
     get 'jimen/list/:category_id', to: 'jimen#list', format: false
+
+    # Api access to jump detail pages, meaning count-up access counter.
+    post 'jimen/jump/:id', to: 'jimen#jump', format: false
   end
 end

@@ -5,6 +5,7 @@ module Api
   # jiman-api controller of the jimen
   #
   class JimenController < ApiController
+    before_action :check_id, only: %i[show jump]
     before_action :check_category_id, only: :list
 
     def index
@@ -14,11 +15,27 @@ module Api
       render 'index', formats: :json, handlers: 'jbuilder'
     end
 
+    def show
+      @jiman = Jiman.includes(:categories).find_by_id(@id)
+      raise RecordNotFound, 'Not found' if @jiman.nil?
+
+      @categories = @jiman.categories
+      render 'show', formats: :json, handlers: 'jbuilder'
+    end
+
     def list
       @jimen = Jiman.includes(:categories).where(categories: { id: @category_id})
       raise RecordNotFound, 'No contents of jiman found' if @jimen.empty?
 
       render 'index', formats: :json, handlers: 'jbuilder'
+    end
+
+    def jump
+      @jiman = Jiman.find_by_id(@id)
+      raise RecordNotFound, 'Not found' if @jiman.nil?
+
+      @jiman.increment_access
+      render 'show', formats: :json, handlers: 'jbuilder'
     end
 
     private
@@ -36,7 +53,7 @@ module Api
       @id = params[:id]
       return if @id =~ /^\d+$/
 
-      raise BadRequest, "Invalid game id: #{@id}"
+      raise BadRequest, "Invalid jiman id: #{@id}"
     end
   end
 end

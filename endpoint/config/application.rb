@@ -28,5 +28,11 @@ module Endpoint
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # Inserted by ngzm - Important!
+    # This Server is only for API, not support Application
+    # (not required CSRF-token or authenticity_token)
+    # Also, must change contoroller's super class  to "ActionController::API" (not "ActionController::Base")
+    config.api_only = true
   end
 end

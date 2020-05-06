@@ -61,13 +61,13 @@ export default {
       ]
     },
     getCategoryName() {
-      const category = this.$store.getters['category/getCategoryById'](this.cid)
+      const category = this.$store.getters.getCategoryById(this.cid)
       return category ? category.name : 'undefined'
     }
   },
   methods: {
     onSelect(id) {
-      this.$router.push(`/contents/${this.cid}/${id}`)
+      this.$router.push(`/items/${this.cid}/${id}`)
     }
   }
 }

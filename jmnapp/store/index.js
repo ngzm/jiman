@@ -1,28 +1,27 @@
-/* eslint-disable */
-
 export const state = () => ({
   categories: []
 })
 
 export const getters = {
   getCategoryById: (state) => (id) => {
-    return state.categories.find(ctg => ctg.id == id)
+    return state.categories.find((ctg) => ctg.id === parseInt(id))
   }
 }
 
 export const mutations = {
-  setCategories(state, datas) {
+  SET_CATEGORIES(state, datas) {
     state.categories = datas
   }
 }
 
 export const actions = {
-  async fetchCategories({ commit }) {
+  async nuxtServerInit({ commit }) {
     const datas = await this.$axios
       .$get(`${process.env.ENDPOINT_URL}/api/categories`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    commit('setCategories', datas)
+    console.log(`datas ${datas}`)
+    commit('SET_CATEGORIES', datas)
   }
 }

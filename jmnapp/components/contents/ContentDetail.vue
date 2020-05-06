@@ -1,50 +1,40 @@
 <template>
-  <div>
-    <v-card>
-      <a href="" @click.stop.prevent="$emit('onJump')">
-        <v-img :src="content.image" min-height="300px" max-height="580px" />
-      </a>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="red darken-4"
-          block
-          dark
-          class="font-weight-bold"
-          @click="$emit('onJump')"
-        >
-          詳細はこちら
-          <v-icon>mdi-play</v-icon>
-        </v-btn>
-      </v-card-actions>
-      <v-card-text class="mt-4">
-        <h5 class="title font-weight-bold">{{ content.title }}</h5>
-        <p class="mt-1 ml-2">{{ content.description }}</p>
-      </v-card-text>
-      <v-card-text>
-        <h5 class="title font-weight-bold">ジマンポイント</h5>
-        <ol class="mt-1 ml-2">
-          <li v-for="(jiman, index) in content.jimans" :key="index">
-            {{ jiman }}
-          </li>
-        </ol>
-      </v-card-text>
-      <v-card-text>
-        <h5 class="title font-weight-bold">登録日</h5>
-        <p class="mt-1 ml-2">{{ formatRegister }}</p>
-      </v-card-text>
-    </v-card>
-  </div>
+  <v-card height="100%">
+    <v-card-text>
+      <h5 class="mt-1 subtitle-1 font-weight-bold">これはなんですか？</h5>
+      <p class="mt-1 mx-2">{{ item.description }}</p>
+    </v-card-text>
+    <v-card-text>
+      <h5 class="subtitle-1 font-weight-bold">アピールポイント</h5>
+      <ol class="mt-1 mx-2">
+        <li v-for="(jiman, index) in item.jimans" :key="index">
+          {{ jiman }}
+        </li>
+      </ol>
+    </v-card-text>
+    <v-card-text>
+      <h5 class="subtitle-1 font-weight-bold">カテゴリ</h5>
+      <ul class="mt-1 mx-2">
+        <li v-for="(ctg, index) in item.categories" :key="index">
+          {{ ctg.name }}
+        </li>
+      </ul>
+    </v-card-text>
+    <v-card-text>
+      <h5 class="subtitle-1 font-weight-bold">登録日</h5>
+      <p class="mt-1 mx-2">{{ formatRegister }}</p>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 export default {
   props: {
-    content: { default: () => {}, type: Object }
+    item: { default: () => {}, type: Object }
   },
   computed: {
     formatRegister() {
-      const dt = new Date(this.content.created_at)
+      const dt = new Date(this.item.created_at)
       const yy = dt.getFullYear()
       const mm = dt.getMonth() + 1
       const dd = dt.getDate()

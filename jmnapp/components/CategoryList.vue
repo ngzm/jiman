@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   computed: {
@@ -32,15 +32,7 @@ export default {
         return 'mdi-chart-bubble'
       }
     },
-    ...mapState('category', ['categories'])
-  },
-  async created() {
-    if (process.client) {
-      await this.fetchCategories()
-    }
-  },
-  methods: {
-    ...mapActions('category', ['fetchCategories'])
+    ...mapState(['categories'])
   }
 }
 </script>
