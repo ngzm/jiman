@@ -6,7 +6,8 @@ module Api
   #
   class ReviewsController < ApiController
     before_action :check_jiman_id
-    before_action :parse_json, only: %i[update_or_create]
+    before_action :parse_json, only: %i[save]
+    before_action :authenticated?, only: %i[save]
 
     def show
       @review = Review.find_by(jiman_id: @jiman_id, user_id: @user_id)
@@ -39,10 +40,6 @@ module Api
 
     # Check parameter jiman_id
     def check_jiman_id
-      ########### WIP ############
-      # 認証が完成するまではとりあえず 1 とする
-      @user_id = 1
-      ############################
       @jiman_id = params[:jiman_id]
       return if @jiman_id =~ /^\d+$/
 

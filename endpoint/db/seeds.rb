@@ -79,8 +79,3 @@ jiman4.categories << cate1
 jiman4.save!
 jiman5.categories << cate1
 jiman5.save!
-
-
-User.create!([
-  { name: "naoki", full_name: "Naoki Nagazumi", email: "nao@zumin.net" }
-])

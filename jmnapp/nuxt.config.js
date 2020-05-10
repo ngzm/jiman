@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   server: {
@@ -35,7 +36,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/axios.js'
+    { src: '~/plugins/axios.js' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -51,7 +52,8 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   /*
    ** Axios module configuration
@@ -62,6 +64,54 @@ export default {
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
+  auth: {
+    redirect: {
+      callback: '/auth/callback',
+      login: '/auth/login',
+      logout: '/auth/logout',
+      home: '/auth/welcome'
+    },
+    strategies: {
+      // local: {
+      //   token: {
+      //     property: 'token.accessToken'
+      //   }
+      // },
+      // localRefresh: {
+      //   scheme: 'refresh',
+      //   token: {
+      //     property: 'token.accessToken',
+      //     maxAge: 15
+      //   },
+      //   refreshToken: {
+      //     property: 'token.refreshToken',
+      //     data: 'refreshToken',
+      //     maxAge: false
+      //   }
+      // },
+      // auth0: {
+      //   domain: 'nuxt-auth.auth0.com',
+      //   clientId: 'xxxxxxxxxxxx'
+      // },
+      // facebook: {
+      //   endpoints: {
+      //     userInfo: 'https://graph.facebook.com/v2.12/me?fields=about,name,picture{url},email,birthday'
+      //   },
+      //   clientId: '1111111111111',
+      //   scope: ['public_profile', 'email', 'user_birthday']
+      // },
+      google: {
+        client_id: process.env.AUTH_GOOGLE_CLIENT_ID
+      }
+      // github: {
+      //   clientId: process.env.GITHUB_CLIENT_ID,
+      //   clientSecret: process.env.GITHUB_CLIENT_SECRET
+      // }
+      // twitter: {
+      //   clientId: 'xxxxxxxxxxxxx'
+      // },
+    }
+  },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {

@@ -29,3 +29,6 @@
 /config/master.key
 
 /vendor/*
+
+# dot_env
+.env

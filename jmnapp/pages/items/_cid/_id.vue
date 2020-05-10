@@ -110,7 +110,11 @@ export default {
       }
     },
     onReview() {
-      this.setDialog(true)
+      if (this.$store.state.auth.loggedIn) {
+        this.setDialog(true)
+      } else {
+        this.$auth.redirect('login')
+      }
     },
     async upAccess() {
       const data = await this.$axios

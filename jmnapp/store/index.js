@@ -4,7 +4,11 @@ export const state = () => ({
 
 export const getters = {
   getCategoryById: (state) => (id) => {
-    return state.categories.find((ctg) => ctg.id === parseInt(id))
+    if (state.categories) {
+      return state.categories.find((ctg) => ctg.id === parseInt(id))
+    } else {
+      return 'undefined'
+    }
   }
 }
 
@@ -21,7 +25,6 @@ export const actions = {
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    console.log(`datas ${datas}`)
     commit('SET_CATEGORIES', datas)
   }
 }

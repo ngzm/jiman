@@ -38,28 +38,40 @@ module Api
   # jiman base controller
   #
   class ApiController < ApplicationController
+    include ActionController::HttpAuthentication::Token::ControllerMethods
+    include Authentication
+
     rescue_from StandardError, with: :handle_500_error
     rescue_from ActiveRecord::RecordInvalid, with: :handle_422_error
-    # rescue_from Auths::Error::AuthError, with: :handle_auth_error
+    rescue_from Auths::Error::AuthError, with: :handle_auth_error
     rescue_from RecordNotFound, with: :handle_404_error
     rescue_from BusinessError, with: :handle_business_error
 
     private
 
-    # # Check authenticated
-    # def authenticated?
-    #   raise Auths::Error::Unauthorized, 'Faild to authenticate' \
-    #     unless authenticate_token
-    # end
+    def authenticated?
+      # raise Auths::Error::Unauthorized, 'Faild to authenticate' \
+      #   unless authenticate_token
+      user = verify_auth_token(authenticate_tokens)
+      @user_id = user.id
+      puts '----------------'
+      puts @user_id
+      puts '----------------'
+    end
 
-    # # Check authenticated token
-    # def authenticate_token
-    #   authenticate_with_http_token do |token|
-    #     user = authenticate_id_token(token)
-    #     @user_id = user.id
-    #     return true
-    #   end
-    # end
+    def authenticate_tokens
+      access_token = nil
+      authenticate_with_http_token do |token|
+        access_token = token
+      end
+      provider = request.headers[:HTTP_X_AUTH_PROVIDER]
+      identifier = request.headers[:HTTP_X_AUTH_USER_SUB]
+
+      raise(Auths::Error::Forbidden, 'No authenticate tokens')  \
+        unless access_token && provider && identifier
+
+      { access_token: access_token, provider: provider, identifier: identifier }
+    end
 
     # Standard Error handler
     def handle_500_error(err)

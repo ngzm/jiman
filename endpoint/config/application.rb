@@ -29,6 +29,9 @@ module Endpoint
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # Autoload lib
+    config.paths.add 'lib', eager_load: true
+
     # Inserted by ngzm - Important!
     # This Server is only for API, not support Application
     # (not required CSRF-token or authenticity_token)
