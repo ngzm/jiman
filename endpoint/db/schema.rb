@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_09_061944) do
+ActiveRecord::Schema.define(version: 2020_05_10_062852) do
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "Accounts", force: :cascade do |t|
     t.string "provider", null: false
     t.string "identifier", null: false
     t.string "access_token", null: false
     t.integer "user_id", null: false
+    t.datetime "updated_at"
     t.datetime "created_at"
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
@@ -67,7 +68,7 @@ ActiveRecord::Schema.define(version: 2020_05_09_061944) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "accounts", "users"
+  add_foreign_key "Accounts", "users"
   add_foreign_key "category_jimen", "categories"
   add_foreign_key "category_jimen", "jimen"
   add_foreign_key "reviews", "jimen"

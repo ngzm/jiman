@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     post 'jimen/jump/:id', to: 'jimen#jump', format: false
 
     # Api access to reviews searched by jiman_id
-    get 'reviews/:jiman_id', to: 'reviews#show', format: false
+    get 'reviews/show/:jiman_id', to: 'reviews#show', format: false
     get 'reviews/list/:jiman_id', to: 'reviews#list', format: false
     post 'reviews/:jiman_id', to: 'reviews#save', format: false
   end

@@ -16,8 +16,15 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <!-- User Menu -->
+      <AppUserMenu v-if="authenticated" />
+      <!-- register jiman -->
+      <v-btn v-if="authenticated" icon>
+        <v-icon>mdi-text-box-multiple-outline</v-icon>
+      </v-btn>
+      <!-- Right Menu -->
       <v-btn icon>
-        <v-icon>mdi-menu</v-icon>
+        <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
     <v-content>
@@ -25,15 +32,20 @@
         <nuxt />
       </v-container>
     </v-content>
+    <WelcomeBar />
   </v-app>
 </template>
 
 <script>
 import CategoryList from '~/components/CategoryList'
+import AppUserMenu from '~/components/AppUserMenu'
+import WelcomeBar from '~/components/WelcomeBar'
 
 export default {
   components: {
-    CategoryList
+    CategoryList,
+    AppUserMenu,
+    WelcomeBar
   },
   data() {
     return {
@@ -42,6 +54,11 @@ export default {
       fixed: false,
       miniVariant: false,
       title: 'Vuetify.js'
+    }
+  },
+  computed: {
+    authenticated() {
+      return this.$store.state.auth.loggedIn
     }
   }
 }

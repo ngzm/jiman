@@ -28,6 +28,8 @@
         :dialog="dialog"
         :set-dialog="setDialog"
         :title="jiman.title"
+        :review="myReview"
+        @onChange="setMyReview"
         @onRegist="registReview"
       />
     </v-col>
@@ -71,6 +73,7 @@ export default {
     return {
       cid: this.$route.params.cid,
       id: this.$route.params.id,
+      myReview: { star: 3, comment: '' },
       dialog: false
     }
   },
@@ -109,13 +112,6 @@ export default {
         window.open(this.jiman.url, '_blank')
       }
     },
-    onReview() {
-      if (this.$store.state.auth.loggedIn) {
-        this.setDialog(true)
-      } else {
-        this.$auth.redirect('login')
-      }
-    },
     async upAccess() {
       const data = await this.$axios
         .$post(`${process.env.ENDPOINT_URL}/api/jimen/jump/${this.id}`)
@@ -124,9 +120,32 @@ export default {
         })
       this.jiman = data
     },
-    async registReview(review) {
+    async onReview() {
+      if (this.$store.state.auth.loggedIn) {
+        this.myReview = { star: 3, comment: '' }
+        const review = await this.$axios
+          .$get(`${process.env.ENDPOINT_URL}/api/reviews/show/${this.id}`)
+          .catch((err) => {
+            console.log(`error !! ${err}`)
+          })
+        if (review) {
+          this.myReview = { star: review.star, comment: review.comment }
+        }
+        this.setDialog(true)
+      } else {
+        this.$auth.redirect('login')
+      }
+    },
+    setMyReview(review) {
+      this.myReview.star = review.star
+      this.myReview.comment = review.comment
+    },
+    async registReview() {
       await this.$axios
-        .$post(`${process.env.ENDPOINT_URL}/api/reviews/${this.id}`, review)
+        .$post(
+          `${process.env.ENDPOINT_URL}/api/reviews/${this.id}`,
+          this.myReview
+        )
         .catch((err) => {
           console.log(`error !! ${err}`)
         })

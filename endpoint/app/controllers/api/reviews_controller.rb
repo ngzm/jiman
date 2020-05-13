@@ -7,7 +7,7 @@ module Api
   class ReviewsController < ApiController
     before_action :check_jiman_id
     before_action :parse_json, only: %i[save]
-    before_action :authenticated?, only: %i[save]
+    before_action :authenticated?, only: %i[show save]
 
     def show
       @review = Review.find_by(jiman_id: @jiman_id, user_id: @user_id)
