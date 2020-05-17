@@ -50,7 +50,7 @@ export default {
     ReviewDialog
   },
   validate({ params }) {
-    return /^\d+$/.test(params.cid) && /^\d+$/.test(params.id)
+    return /^u*\d+$/.test(params.cid) && /^\d+$/.test(params.id)
   },
   async asyncData(context) {
     let jdata = await context.$axios
@@ -71,13 +71,28 @@ export default {
   },
   data() {
     return {
-      cid: this.$route.params.cid,
-      id: this.$route.params.id,
       myReview: { star: 3, comment: '' },
       dialog: false
     }
   },
   computed: {
+    cid() {
+      if (/^\d+$/.test(this.$route.params.cid)) {
+        return this.$route.params.cid
+      } else {
+        return null
+      }
+    },
+    uid() {
+      if (/^u\d+$/.test(this.$route.params.cid)) {
+        return this.$route.params.cid.slice(1)
+      } else {
+        return null
+      }
+    },
+    id() {
+      return this.$route.params.id
+    },
     breadItems() {
       return [
         {
@@ -86,9 +101,9 @@ export default {
           to: '/'
         },
         {
-          text: this.getCategoryName,
+          text: this.getParentName,
           disabled: false,
-          to: `/categories/${this.cid}`
+          to: this.getParentTo
         },
         {
           text: this.jiman.title,
@@ -97,9 +112,22 @@ export default {
         }
       ]
     },
-    getCategoryName() {
-      const category = this.$store.getters.getCategoryById(this.cid)
-      return category ? category.name : 'undefined'
+    getParentTo() {
+      if (this.cid) {
+        return `/categories/${this.cid}`
+      } else if (this.uid) {
+        return `/users/${this.uid}`
+      }
+      return '/categories/1'
+    },
+    getParentName() {
+      if (this.cid) {
+        const category = this.$store.getters.getCategoryById(this.cid)
+        return category ? category.name : 'undefined'
+      } else if (this.uid) {
+        return this.$store.state.auth.user.name
+      }
+      return 'undefined'
     }
   },
   methods: {

@@ -16,12 +16,10 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <!-- User icon -->
+      <LoginUser v-if="authenticated" />
       <!-- User Menu -->
-      <AppUserMenu v-if="authenticated" />
-      <!-- register jiman -->
-      <v-btn v-if="authenticated" icon>
-        <v-icon>mdi-text-box-multiple-outline</v-icon>
-      </v-btn>
+      <UserMenu v-if="authenticated" />
       <!-- Right Menu -->
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
@@ -37,14 +35,16 @@
 </template>
 
 <script>
-import CategoryList from '~/components/CategoryList'
-import AppUserMenu from '~/components/AppUserMenu'
-import WelcomeBar from '~/components/WelcomeBar'
+import CategoryList from '~/components/frames/CategoryList'
+import LoginUser from '~/components/frames/LoginUser'
+import UserMenu from '~/components/frames/UserMenu'
+import WelcomeBar from '~/components/frames/WelcomeBar'
 
 export default {
   components: {
     CategoryList,
-    AppUserMenu,
+    LoginUser,
+    UserMenu,
     WelcomeBar
   },
   data() {

@@ -2,12 +2,7 @@
   <v-menu bottom left offset-y>
     <template v-slot:activator="{ on }">
       <v-btn icon dark v-on="on">
-        <v-avatar v-if="hasPicture" size="32px">
-          <img :src="authUser.picture" alt="user.name" />
-        </v-avatar>
-        <v-icon v-else dark>
-          mdi-account_circle
-        </v-icon>
+        <v-icon dark>mdi-account</v-icon>
       </v-btn>
     </template>
     <v-list dense color="grey darken-3">

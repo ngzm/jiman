@@ -1,10 +1,19 @@
 <template>
   <v-row class="mx-8">
     <v-col cols="12">
-      <v-breadcrumbs
-        :items="breadItems"
-        class="font-weight-bold"
-      ></v-breadcrumbs>
+      <v-row>
+        <v-col cols="12">{{ authUser.name }} さんのページ</v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-avatar v-if="hasPicture" color="grey" size="128">
+            <img :src="authUser.picture" alt="authUser.name" />
+          </v-avatar>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">投稿作品</v-col>
+      </v-row>
       <v-row>
         <v-col
           v-for="item in jimen"
@@ -30,42 +39,34 @@ export default {
     GridItem
   },
   validate({ params }) {
-    return /^\d+$/.test(params.cid)
+    return /^\d+$/.test(params.uid)
   },
   async asyncData(context) {
     const datas = await context.$axios
-      .$get(`${context.env.ENDPOINT_URL}/api/jimen/list/${context.params.cid}`)
+      .$get(`${context.env.ENDPOINT_URL}/api/jimen/list/${context.params.uid}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
     return datas ? { jimen: datas } : { jimen: [] }
   },
   computed: {
-    cid() {
-      return this.$route.params.cid
+    uid() {
+      return this.$route.params.uid
     },
-    breadItems() {
-      return [
-        {
-          text: 'Home',
-          disabled: false,
-          to: '/'
-        },
-        {
-          text: this.getCategoryName,
-          disabled: true,
-          to: `/categories/${this.cid}`
-        }
-      ]
+    authUser() {
+      return this.$store.state.auth.user
     },
-    getCategoryName() {
-      const category = this.$store.getters.getCategoryById(this.cid)
-      return category ? category.name : 'undefined'
+    hasPicture() {
+      if (this.authUser) {
+        return !!this.authUser.picture
+      } else {
+        return false
+      }
     }
   },
   methods: {
     onSelect(id) {
-      this.$router.push(`/items/${this.cid}/${id}`)
+      this.$router.push(`/items/u${this.uid}/${id}`)
     }
   }
 }
