@@ -2,8 +2,10 @@
 
 # User model Class
 class User < ApplicationRecord
+  has_many :jimen, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :jimen, through: :reviews
+  # has_many :review_jimen, class_name: 'Jiman', foreign_key: 'jiman_id', through: :reviews
+  has_many :review_jimen, through: :reviews, source: 'jiman'
   has_many :accounts, dependent: :destroy
 
   validates :name, presence: true

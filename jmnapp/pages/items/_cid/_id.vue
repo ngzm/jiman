@@ -125,7 +125,7 @@ export default {
         const category = this.$store.getters.getCategoryById(this.cid)
         return category ? category.name : 'undefined'
       } else if (this.uid) {
-        return this.$store.state.auth.user.name
+        return this.$store.state.auth.user.given_name
       }
       return 'undefined'
     }

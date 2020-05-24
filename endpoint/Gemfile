@@ -26,7 +26,7 @@ gem 'rack-cors'
 
 gem 'faraday'
 gem 'faraday_middleware'
-
+gem 'carrierwave'
 gem 'dotenv-rails'
 
 group :development, :test do

@@ -6,7 +6,7 @@
       </v-btn>
     </template>
     <v-list dense color="grey darken-3">
-      <v-list-item to="/">
+      <v-list-item to="/items/edit/new">
         <v-list-item-action>
           <v-icon>mdi-text-box-multiple-outline</v-icon>
         </v-list-item-action>

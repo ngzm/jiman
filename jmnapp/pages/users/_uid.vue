@@ -1,18 +1,24 @@
 <template>
   <v-row class="mx-8">
     <v-col cols="12">
-      <v-row>
-        <v-col cols="12">{{ authUser.name }} さんのページ</v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-avatar v-if="hasPicture" color="grey" size="128">
-            <img :src="authUser.picture" alt="authUser.name" />
+      <v-breadcrumbs
+        :items="breadItems"
+        class="font-weight-bold"
+      ></v-breadcrumbs>
+      <v-row align="baseline" justify="center" class="mb-8">
+        <v-col cols="auto">
+          <v-avatar v-if="hasPicture" color="grey" size="160">
+            <img :src="authUser.picture" alt="authUserName" />
           </v-avatar>
+        </v-col>
+        <v-col cols="auto">
+          <h4>{{ authUserName }} さん</h4>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12">投稿作品</v-col>
+        <v-col cols="auto">
+          <h4>投稿リスト</h4>
+        </v-col>
       </v-row>
       <v-row>
         <v-col
@@ -56,12 +62,29 @@ export default {
     authUser() {
       return this.$store.state.auth.user
     },
+    authUserName() {
+      return this.$store.state.auth.user.given_name
+    },
     hasPicture() {
       if (this.authUser) {
         return !!this.authUser.picture
       } else {
         return false
       }
+    },
+    breadItems() {
+      return [
+        {
+          text: 'Home',
+          disabled: false,
+          to: '/'
+        },
+        {
+          text: '作者のページ',
+          disabled: true,
+          to: `/users/${this.uid}`
+        }
+      ]
     }
   },
   methods: {

@@ -27,6 +27,17 @@ Category.create!([
   { name: "子供の部" }
 ])
 
+# Users
+User.create!([
+  {
+    name: "Naoki",
+    full_name: "Naoki Nagazumi",
+    email: "nk.ngzm@gmail.com",
+    image: "https://lh3.googleusercontent.com/a-/AOh14GjnQkyIf7R1bMfMer0VU7yNZgyVKKSzhP3-EU5D",
+    admin: 1
+   }
+])
+
 # Jimen
 jiman1 = Jiman.create!({
   title: "Longlivenet",

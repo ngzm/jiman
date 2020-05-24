@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_062852) do
+ActiveRecord::Schema.define(version: 2020_05_23_025034) do
 
   create_table "Accounts", force: :cascade do |t|
     t.string "provider", null: false
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 2020_05_10_062852) do
     t.integer "star", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", default: 1, null: false
+    t.string "point1"
+    t.string "point2"
+    t.string "point3"
+    t.string "point4"
+    t.string "point5"
+    t.string "point6"
+    t.index ["user_id"], name: "index_jimen_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -71,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_05_10_062852) do
   add_foreign_key "Accounts", "users"
   add_foreign_key "category_jimen", "categories"
   add_foreign_key "category_jimen", "jimen"
+  add_foreign_key "jimen", "users"
   add_foreign_key "reviews", "jimen"
   add_foreign_key "reviews", "users"
 end
