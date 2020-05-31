@@ -72,9 +72,27 @@ export default {
       this.mode = this.ENUM.CONFIRM
     },
     async onSend() {
-      console.log(this.jiman)
+      const sendData = {
+        title: this.jiman.title,
+        description: this.jiman.description,
+        url: this.jiman.url,
+        point1: this.jiman.point1,
+        point2: this.jiman.point2,
+        point3: this.jiman.point3,
+        point4: this.jiman.point4,
+        imagedata: {
+          name: this.jiman.imagedata.name,
+          type: this.jiman.imagedata.type,
+          base64data: this.jiman.imagedata.base64data.split(',')[1]
+        },
+        categories: this.jiman.categories
+      }
+      console.log(sendData)
       const ret = await this.$axios
-        .$post(`${process.env.ENDPOINT_URL}/api/jimen`, this.jiman)
+        .$put(
+          `${process.env.ENDPOINT_URL}/api/jimen/${this.jiman.id}`,
+          sendData
+        )
         .catch((err) => {
           console.log(`error !! ${err}`)
         })

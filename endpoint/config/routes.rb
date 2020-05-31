@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     get 'categories', to: 'categories#index', format: false
 
     # Api access to jimen resources
-    resources :jimen, only: %i[index show create], format: false
+    resources :jimen, only: %i[index show update create], format: false
 
     # Api access to jimen searched by category_id
     get 'jimen/list/:category_id', to: 'jimen#list', format: false

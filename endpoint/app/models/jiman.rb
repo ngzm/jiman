@@ -36,6 +36,11 @@ class Jiman < ApplicationRecord
   end
 
   def image_text(file_name, content_type, text)
+    puts '=============='
+    puts file_name
+    puts content_type
+    puts text
+    puts '=============='
     io = CarrierStringIO.new(file_name, content_type, Base64.decode64(text))
     self.image = io
   end

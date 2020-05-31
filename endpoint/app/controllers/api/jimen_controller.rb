@@ -5,9 +5,9 @@ module Api
   # jiman-api controller of the jimen
   #
   class JimenController < ApiController
-    before_action :check_id, only: %i[show jump]
+    before_action :check_id, only: %i[show jump update]
     before_action :check_category_id, only: :list
-    before_action :parse_json, only: %i[create]
+    before_action :parse_json, only: %i[create update]
 
     def index
       @jimen = Jiman.all
@@ -40,14 +40,33 @@ module Api
       render 'show', formats: :json, handlers: 'jbuilder'
     end
 
+    def update
+      @jiman = Jiman.includes(:categories).find_by_id(@id)
+      raise RecordNotFound, 'Not found' if @jiman.nil?
+
+      jiman_data(jiman_params)
+
+      puts '-------------------------'
+      puts @jiman
+      puts '-------------------------'
+      puts jiman_params[:imagedata]
+
+      @jiman.image_text(
+        jiman_params[:imagedata][:name],
+        jiman_params[:imagedata][:type],
+        jiman_params[:imagedata][:base64data]
+      )
+      @jiman.save!
+      render 'show', formats: :json, handlers: 'jbuilder'
+    end
+
     def create
       @jiman = Jiman.new
       jiman_data(jiman_params)
-
       @jiman.image_text(
-        jiman_params[:file],
-        jiman_params[:type],
-        jiman_params[:imgdata]
+        jiman_params[:imagedata][:name],
+        jiman_params[:imagedata][:type],
+        jiman_params[:imagedata][:imgdata]
       )
       @jiman.save!
       render 'show', formats: :json, handlers: 'jbuilder'
@@ -79,8 +98,10 @@ module Api
     # Strong parameters
     def jiman_params
       params.require(:jiman).permit(
-        :imgdata, :file, :type, :title, :description,
-        :url, :point1, :point2, :point3, :point4, :point5, :point6
+        :title, :description, :url,
+        :point1, :point2, :point3, :point4, :point5, :point6,
+        imagedata: %i[name type base64data],
+        categories: []
       )
     end
 

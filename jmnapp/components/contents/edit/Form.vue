@@ -5,6 +5,20 @@
         <h4 class="blue--text">掲載したい作品情報を入力してください</h4>
       </v-col>
     </v-row>
+    <v-row no-gutters justify="end">
+      <v-col cols="auto" class="px-md-8 px-sm-6 px-2">
+        <v-btn
+          :disabled="invalid"
+          class="info font-weight-bold"
+          @click="submit"
+        >
+          確認
+        </v-btn>
+        <v-btn class="indigo darken-4 font-weight-bold" @click="clear">
+          クリア
+        </v-btn>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12" md="6" class="px-md-8 px-sm-6 px-2">
         <v-text-field
@@ -14,7 +28,7 @@
           label="作品タイトル"
           filled
           required
-          class="mt-6"
+          class="mt-2"
         />
         <v-text-field
           v-model="url"
@@ -69,10 +83,10 @@
           :rules="imageRules"
           accept="image/png, image/jpeg, image/gif"
           prepend-icon="mdi-file-image-outline"
-          label="カバーイメージ画像選択"
+          label="カバー画像選択"
           filled
           show-size
-          class="mt-8"
+          class="mt-2"
           @change="getFileContent"
           @click:clear="clearFile"
         />
@@ -119,14 +133,6 @@
         />
       </v-col>
     </v-row>
-    <div class="mt-3">
-      <v-btn :disabled="invalid" class="info font-weight-bold" @click="submit">
-        確認
-      </v-btn>
-      <v-btn class="indigo darken-4 font-weight-bold" @click="clear">
-        クリア
-      </v-btn>
-    </div>
   </v-form>
 </template>
 <script>
