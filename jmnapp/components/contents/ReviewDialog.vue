@@ -42,7 +42,7 @@
             >
               登録する
             </v-btn>
-            <v-btn color="grey" dark @click.native="setDialog(false)">
+            <v-btn color="grey" dark @click.native="displayme = false">
               やめる
             </v-btn>
           </div>
@@ -54,6 +54,10 @@
 <script>
 export default {
   props: {
+    value: {
+      required: true,
+      type: Boolean
+    },
     title: {
       default: '',
       type: String
@@ -61,14 +65,6 @@ export default {
     review: {
       required: true,
       type: Object
-    },
-    dialog: {
-      required: true,
-      type: Boolean
-    },
-    setDialog: {
-      required: true,
-      type: Function
     }
   },
   data() {
@@ -85,10 +81,10 @@ export default {
   computed: {
     displayme: {
       get() {
-        return this.dialog
+        return this.value
       },
       set(flg) {
-        this.setDialog(flg)
+        this.$emit('input', flg)
       }
     },
     star: {

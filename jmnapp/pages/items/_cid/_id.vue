@@ -25,8 +25,7 @@
         </v-col>
       </v-row>
       <ReviewDialog
-        :dialog="dialog"
-        :set-dialog="setDialog"
+        v-model="dialog"
         :title="jiman.title"
         :review="myReview"
         @onChange="setMyReview"
@@ -131,9 +130,6 @@ export default {
     }
   },
   methods: {
-    setDialog(flg) {
-      this.dialog = flg
-    },
     onJump() {
       this.upAccess()
       if (process.client) {
@@ -159,7 +155,7 @@ export default {
         if (review) {
           this.myReview = { star: review.star, comment: review.comment }
         }
-        this.setDialog(true)
+        this.dialog = true
       } else {
         this.$auth.redirect('login')
       }
@@ -193,7 +189,7 @@ export default {
         })
       if (!rdata) rdata = []
       this.reviews = rdata
-      this.setDialog(false)
+      this.dialog = false
     }
   }
 }

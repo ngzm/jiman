@@ -8,7 +8,7 @@
         @onSubmit="onSend"
         @onBack="onBack"
       />
-      <Form v-else :jiman="jiman" @onSubmit="onConfirm" />
+      <Form v-else v-model="jiman" @onSubmit="onConfirm" @onClear="onClear" />
     </v-col>
   </v-row>
 </template>
@@ -23,6 +23,10 @@ export default {
     orginal: {
       required: true,
       type: Object
+    },
+    id: {
+      required: true,
+      type: String
     }
   },
   data() {
@@ -40,31 +44,37 @@ export default {
       return this.mode === this.ENUM.COMPLETE
     }
   },
-  mounted() {
-    this.jiman = { ...this.oiginal }
+  async created() {
+    console.log(this.id)
+    await this.loadJiman()
+    console.log(this.jiman)
   },
   methods: {
-    onConfirm(form) {
-      console.log(form)
-      this.jiman = { ...form }
+    async loadJiman() {
+      try {
+        const jdata = await this.$axios.$get(
+          `${process.env.ENDPOINT_URL}/api/jimen/${this.id}`
+        )
+        // ----------------------------------------------------
+        // 最初からデータがないと、computed で反応しないので注意
+        // ----------------------------------------------------
+        const imagedata = { name: '', type: ``, base64data: null }
+        this.jiman = Object.assign(jdata, { imagedata })
+      } catch (err) {
+        console.log(`error !! ${err}`)
+      }
+    },
+    async onClear() {
+      await this.loadJiman()
+    },
+    onConfirm() {
+      console.log(this.jiman)
       this.mode = this.ENUM.CONFIRM
     },
     async onSend() {
-      const postdata = {
-        file: this.jiman.file.name,
-        type: this.jiman.file.type,
-        imgdata: this.jiman.imgdata.split(',')[1],
-        title: this.jiman.title,
-        url: this.jiman.url,
-        description: this.jiman.description,
-        point1: this.jiman.point1,
-        point2: this.jiman.point2,
-        point3: this.jiman.point3,
-        point4: this.jiman.point4
-      }
-      console.log(postdata)
+      console.log(this.jiman)
       const ret = await this.$axios
-        .$post(`${process.env.ENDPOINT_URL}/api/jimen`, postdata)
+        .$post(`${process.env.ENDPOINT_URL}/api/jimen`, this.jiman)
         .catch((err) => {
           console.log(`error !! ${err}`)
         })
@@ -74,9 +84,8 @@ export default {
     onBack() {
       this.mode = this.ENUM.FORM
     },
-    onRestart() {
-      this.jiman = {}
-      this.jiman = { ...this.oiginal }
+    async onRestart() {
+      await this.loadJiman()
       this.mode = this.ENUM.FORM
     }
   }

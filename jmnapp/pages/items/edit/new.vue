@@ -1,6 +1,6 @@
 <template>
-  <v-row class="mx-6">
-    <v-col cols="12" sm="10" md="8" lg="6">
+  <v-row class="mx-sm-6 mx-2">
+    <v-col cols="12">
       <h4>新規登録</h4>
       <JimanEdit :orginal="jiman" />
     </v-col>

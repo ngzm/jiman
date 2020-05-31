@@ -76,9 +76,12 @@ module Api
       params[:jiman] = JSON.parse(request.body.read, symbolize_names: true)
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Strong parameters
     def jiman_params
-      params.require(:jiman).permit(:imgdata, :file, :type, :title, :description, :url, :point1, :point2, :point3, :point4, :point5, :point6)
+      params.require(:jiman).permit(
+        :imgdata, :file, :type, :title, :description,
+        :url, :point1, :point2, :point3, :point4, :point5, :point6
+      )
     end
 
     def jiman_data(params)
