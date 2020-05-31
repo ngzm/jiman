@@ -1,0 +1,79 @@
+
+# SETUP
+% npm install @nuxtjs/auth
+% vim nuxt.config.js
+```
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
+  ],
+・・
+・・
+  auth: {
+    redirect: {
+      callback: '/auth/callback',
+      login: '/auth/login',
+      logout: '/auth/logout'
+    },
+    strategies: {
+      // facebook: {
+      //   endpoints: {
+      //     userInfo: 'https://graph.facebook.com/v2.12/me?fields=about,name,picture{url},email,birthday'
+      //   },
+      //   clientId: '1671464192946675',
+      //   scope: ['public_profile', 'email', 'user_birthday']
+      // },
+      google: {
+        client_id: '6***********-8rp***************k2dku.apps.googleusercontent.com'
+      }
+      // github: {
+      //   clientId: process.env.GITHUB_CLIENT_ID,
+      //   clientSecret: process.env.GITHUB_CLIENT_SECRET
+      // }
+    }
+  },
+```
+
+以上で、google で OAuth2 認証ができる。
+認証の結果、WebStrage と  Cookie に AccessToken が登録される。
+また、store.state.auth に、次の user 情報が登録される。
+```
+loggedIn: true
+strategy: "google"
+user: {
+  email: "xxxxxxxx@gmail.com"
+  email_verified: true
+  family_name: "X*******"
+  given_name: "Na****"
+  locale: "ja"
+  name: "user name"
+  picture: "https://lh3.googleusercontent.com/a-/AOh14Gjxxxxxxxxxxxxxxxxx
+  sub: "1063*************"
+}
+```
+
+Server Rails への認証 HEADER 設定
+何もしなくても、Authorization Header は自動的に設定されている。
+したがって、Authorization 以外で必要な情報（ここではProvider）を追加した。
+
+% vim plugin/axios.js
+```
+export default function({ store, $axios }) {
+  const getAuthStrategy = () => {
+    return store.state.auth.strategy
+  }
+  $axios.interceptors.request.use(
+    (config) => {
+      if (store.state.auth.loggedIn) {
+        config.headers = {
+          ...config.headers,
+          'X-AUTH-PROVIDER': getAuthStrategy()
+        }
+      }
+      return config
+    },
+    (error) => Promise.reject(error)
+  )
+}
+```

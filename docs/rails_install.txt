@@ -1,0 +1,421 @@
+% ruby -v
+ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-darwin19]
+
+% bundle -v
+Bundler version 1.17.2
+
+######################
+# bundle init
+######################
+
+% bundle init
+Writing new Gemfile to /Users/naoki/DEV/jiman/endpoint/Gemfile
+
+% vim Gemfile
+gem 'rails'  # ここのコメントアウトを外す
+
+######################
+# bundle install rails
+######################
+
+% bundle install --path vendor/bundle
+
+Fetching gem metadata from https://rubygems.org/.............
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies...
+Fetching rake 13.0.1
+Installing rake 13.0.1
+Fetching concurrent-ruby 1.1.6
+Installing concurrent-ruby 1.1.6
+Fetching i18n 1.8.2
+Installing i18n 1.8.2
+Fetching minitest 5.14.0
+Installing minitest 5.14.0
+Fetching thread_safe 0.3.6
+Installing thread_safe 0.3.6
+Fetching tzinfo 1.2.7
+Installing tzinfo 1.2.7
+Fetching zeitwerk 2.3.0
+Installing zeitwerk 2.3.0
+Fetching activesupport 6.0.2.2
+Installing activesupport 6.0.2.2
+Fetching builder 3.2.4
+Installing builder 3.2.4
+Fetching erubi 1.9.0
+Installing erubi 1.9.0
+Fetching mini_portile2 2.4.0
+Installing mini_portile2 2.4.0
+Fetching nokogiri 1.10.9
+Installing nokogiri 1.10.9 with native extensions
+Fetching rails-dom-testing 2.0.3
+Installing rails-dom-testing 2.0.3
+Fetching crass 1.0.6
+Installing crass 1.0.6
+Fetching loofah 2.5.0
+Installing loofah 2.5.0
+Fetching rails-html-sanitizer 1.3.0
+Installing rails-html-sanitizer 1.3.0
+Fetching actionview 6.0.2.2
+Installing actionview 6.0.2.2
+Fetching rack 2.2.2
+Installing rack 2.2.2
+Fetching rack-test 1.1.0
+Installing rack-test 1.1.0
+Fetching actionpack 6.0.2.2
+Installing actionpack 6.0.2.2
+Fetching nio4r 2.5.2
+Installing nio4r 2.5.2 with native extensions
+Fetching websocket-extensions 0.1.4
+Installing websocket-extensions 0.1.4
+Fetching websocket-driver 0.7.1
+Installing websocket-driver 0.7.1 with native extensions
+Fetching actioncable 6.0.2.2
+Installing actioncable 6.0.2.2
+Fetching globalid 0.4.2
+Installing globalid 0.4.2
+Fetching activejob 6.0.2.2
+Installing activejob 6.0.2.2
+Fetching activemodel 6.0.2.2
+Installing activemodel 6.0.2.2
+Fetching activerecord 6.0.2.2
+Installing activerecord 6.0.2.2
+Fetching mimemagic 0.3.4
+Installing mimemagic 0.3.4
+Fetching marcel 0.3.3
+Installing marcel 0.3.3
+Fetching activestorage 6.0.2.2
+Installing activestorage 6.0.2.2
+Fetching mini_mime 1.0.2
+Installing mini_mime 1.0.2
+Fetching mail 2.7.1
+Installing mail 2.7.1
+Fetching actionmailbox 6.0.2.2
+Installing actionmailbox 6.0.2.2
+Fetching actionmailer 6.0.2.2
+Installing actionmailer 6.0.2.2
+Fetching actiontext 6.0.2.2
+Installing actiontext 6.0.2.2
+Using bundler 1.17.2
+Fetching method_source 1.0.0
+Installing method_source 1.0.0
+Fetching thor 1.0.1
+Installing thor 1.0.1
+Fetching railties 6.0.2.2
+Installing railties 6.0.2.2
+Fetching sprockets 4.0.0
+Installing sprockets 4.0.0
+Fetching sprockets-rails 3.2.1
+Installing sprockets-rails 3.2.1
+Fetching rails 6.0.2.2
+Installing rails 6.0.2.2
+Bundle complete! 1 Gemfile dependency, 43 gems now installed.
+Bundled gems are installed into `./vendor/bundle`
+Post-install message from i18n:
+
+HEADS UP! i18n 1.1 changed fallbacks to exclude default locale.
+But that may break your application.
+
+If you are upgrading your Rails application from an older version of Rails:
+
+Please check your Rails app for 'config.i18n.fallbacks = true'.
+If you're using I18n (>= 1.1.0) and Rails (< 5.2.2), this should be
+'config.i18n.fallbacks = [I18n.default_locale]'.
+If not, fallbacks will be broken in your app by I18n 1.1.x.
+
+If you are starting a NEW Rails application, you can ignore this notice.
+
+For more info see:
+https://github.com/svenfuchs/i18n/releases/tag/v1.1.0
+
+######################
+# rails new
+######################
+
+% be rails new . --skip-bundle --skip-javascript --skip-sprockets --skip-coffee --skip-turbolinks
+       exist
+      create  README.md
+      create  Rakefile
+      create  .ruby-version
+      create  config.ru
+      create  .gitignore
+    conflict  Gemfile
+Overwrite /Users/naoki/DEV/jiman/endpoint/Gemfile? (enter "h" for help) [Ynaqdhm] Y
+       force  Gemfile
+         run  git init from "."
+Initialized empty Git repository in /Users/naoki/DEV/jiman/endpoint/.git/
+      create  app
+      create  app/assets/config/manifest.js
+      create  app/assets/stylesheets/application.css
+      create  app/channels/application_cable/channel.rb
+      create  app/channels/application_cable/connection.rb
+      create  app/controllers/application_controller.rb
+      create  app/helpers/application_helper.rb
+      create  app/javascript/channels/consumer.js
+      create  app/javascript/channels/index.js
+      create  app/javascript/packs/application.js
+      create  app/jobs/application_job.rb
+      create  app/mailers/application_mailer.rb
+      create  app/models/application_record.rb
+      create  app/views/layouts/application.html.erb
+      create  app/views/layouts/mailer.html.erb
+      create  app/views/layouts/mailer.text.erb
+      create  app/assets/images/.keep
+      create  app/controllers/concerns/.keep
+      create  app/models/concerns/.keep
+      create  bin
+      create  bin/rails
+      create  bin/rake
+      create  bin/setup
+      create  bin/yarn
+      create  config
+      create  config/routes.rb
+      create  config/application.rb
+      create  config/environment.rb
+      create  config/cable.yml
+      create  config/puma.rb
+      create  config/spring.rb
+      create  config/storage.yml
+      create  config/environments
+      create  config/environments/development.rb
+      create  config/environments/production.rb
+      create  config/environments/test.rb
+      create  config/initializers
+      create  config/initializers/application_controller_renderer.rb
+      create  config/initializers/assets.rb
+      create  config/initializers/backtrace_silencers.rb
+      create  config/initializers/content_security_policy.rb
+      create  config/initializers/cookies_serializer.rb
+      create  config/initializers/cors.rb
+      create  config/initializers/filter_parameter_logging.rb
+      create  config/initializers/inflections.rb
+      create  config/initializers/mime_types.rb
+      create  config/initializers/new_framework_defaults_6_0.rb
+      create  config/initializers/wrap_parameters.rb
+      create  config/locales
+      create  config/locales/en.yml
+      create  config/master.key
+      append  .gitignore
+      create  config/boot.rb
+      create  config/database.yml
+      create  db
+      create  db/seeds.rb
+      create  lib
+      create  lib/tasks
+      create  lib/tasks/.keep
+      create  lib/assets
+      create  lib/assets/.keep
+      create  log
+      create  log/.keep
+      create  public
+      create  public/404.html
+      create  public/422.html
+      create  public/500.html
+      create  public/apple-touch-icon-precomposed.png
+      create  public/apple-touch-icon.png
+      create  public/favicon.ico
+      create  public/robots.txt
+      create  tmp
+      create  tmp/.keep
+      create  tmp/pids
+      create  tmp/pids/.keep
+      create  tmp/cache
+      create  tmp/cache/assets
+       exist  vendor
+      create  vendor/.keep
+      create  test/fixtures
+      create  test/fixtures/.keep
+      create  test/fixtures/files
+      create  test/fixtures/files/.keep
+      create  test/controllers
+      create  test/controllers/.keep
+      create  test/mailers
+      create  test/mailers/.keep
+      create  test/models
+      create  test/models/.keep
+      create  test/helpers
+      create  test/helpers/.keep
+      create  test/integration
+      create  test/integration/.keep
+      create  test/channels/application_cable/connection_test.rb
+      create  test/test_helper.rb
+      create  test/system
+      create  test/system/.keep
+      create  test/application_system_test_case.rb
+      create  storage
+      create  storage/.keep
+      create  tmp/storage
+      create  tmp/storage/.keep
+      remove  app/javascript
+      remove  config/initializers/assets.rb
+      remove  config/initializers/cors.rb
+      remove  config/initializers/new_framework_defaults_6_0.rb
+      remove  bin/yarn
+
+############################
+## Re Install all gems
+############################
+
+## delete temp files
+
+% rm -rf .bundle
+% rm -rf vendor/bundle
+
+## install all
+
+% bundle install --path vendor/bundle
+The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
+Fetching gem metadata from https://rubygems.org/............
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies...
+Fetching rake 13.0.1
+Installing rake 13.0.1
+Fetching concurrent-ruby 1.1.6
+Installing concurrent-ruby 1.1.6
+Fetching i18n 1.8.2
+Installing i18n 1.8.2
+Fetching minitest 5.14.0
+Installing minitest 5.14.0
+Fetching thread_safe 0.3.6
+Installing thread_safe 0.3.6
+Fetching tzinfo 1.2.7
+Installing tzinfo 1.2.7
+Fetching zeitwerk 2.3.0
+Installing zeitwerk 2.3.0
+Fetching activesupport 6.0.2.2
+Installing activesupport 6.0.2.2
+Fetching builder 3.2.4
+Installing builder 3.2.4
+Fetching erubi 1.9.0
+Installing erubi 1.9.0
+Fetching mini_portile2 2.4.0
+Installing mini_portile2 2.4.0
+Fetching nokogiri 1.10.9
+Installing nokogiri 1.10.9 with native extensions
+Fetching rails-dom-testing 2.0.3
+Installing rails-dom-testing 2.0.3
+Fetching crass 1.0.6
+Installing crass 1.0.6
+Fetching loofah 2.5.0
+Installing loofah 2.5.0
+Fetching rails-html-sanitizer 1.3.0
+Installing rails-html-sanitizer 1.3.0
+Fetching actionview 6.0.2.2
+Installing actionview 6.0.2.2
+Fetching rack 2.2.2
+Installing rack 2.2.2
+Fetching rack-test 1.1.0
+Installing rack-test 1.1.0
+Fetching actionpack 6.0.2.2
+Installing actionpack 6.0.2.2
+Fetching nio4r 2.5.2
+Installing nio4r 2.5.2 with native extensions
+Fetching websocket-extensions 0.1.4
+Installing websocket-extensions 0.1.4
+Fetching websocket-driver 0.7.1
+Installing websocket-driver 0.7.1 with native extensions
+Fetching actioncable 6.0.2.2
+Installing actioncable 6.0.2.2
+Fetching globalid 0.4.2
+Installing globalid 0.4.2
+Fetching activejob 6.0.2.2
+Installing activejob 6.0.2.2
+Fetching activemodel 6.0.2.2
+Installing activemodel 6.0.2.2
+Fetching activerecord 6.0.2.2
+Installing activerecord 6.0.2.2
+Fetching mimemagic 0.3.4
+Installing mimemagic 0.3.4
+Fetching marcel 0.3.3
+Installing marcel 0.3.3
+Fetching activestorage 6.0.2.2
+Installing activestorage 6.0.2.2
+Fetching mini_mime 1.0.2
+Installing mini_mime 1.0.2
+Fetching mail 2.7.1
+Installing mail 2.7.1
+Fetching actionmailbox 6.0.2.2
+Installing actionmailbox 6.0.2.2
+Fetching actionmailer 6.0.2.2
+Installing actionmailer 6.0.2.2
+Fetching actiontext 6.0.2.2
+Installing actiontext 6.0.2.2
+Fetching public_suffix 4.0.4
+Installing public_suffix 4.0.4
+Fetching addressable 2.7.0
+Installing addressable 2.7.0
+Fetching bindex 0.8.1
+Installing bindex 0.8.1 with native extensions
+Fetching msgpack 1.3.3
+Installing msgpack 1.3.3 with native extensions
+Fetching bootsnap 1.4.6
+Installing bootsnap 1.4.6 with native extensions
+Using bundler 1.17.2
+Fetching byebug 11.1.3
+Installing byebug 11.1.3 with native extensions
+Fetching regexp_parser 1.7.0
+Installing regexp_parser 1.7.0
+Fetching xpath 3.2.0
+Installing xpath 3.2.0
+Fetching capybara 3.32.1
+Installing capybara 3.32.1
+Fetching childprocess 3.0.0
+Installing childprocess 3.0.0
+Fetching ffi 1.12.2
+Installing ffi 1.12.2 with native extensions
+Fetching jbuilder 2.10.0
+Installing jbuilder 2.10.0
+Fetching rb-fsevent 0.10.4
+Installing rb-fsevent 0.10.4
+Fetching rb-inotify 0.10.1
+Installing rb-inotify 0.10.1
+Fetching ruby_dep 1.5.0
+Installing ruby_dep 1.5.0
+Fetching listen 3.1.5
+Installing listen 3.1.5
+Fetching method_source 1.0.0
+Installing method_source 1.0.0
+Fetching puma 4.3.3
+Installing puma 4.3.3 with native extensions
+Fetching thor 1.0.1
+Installing thor 1.0.1
+Fetching railties 6.0.2.2
+Installing railties 6.0.2.2
+Fetching sprockets 4.0.0
+Installing sprockets 4.0.0
+Fetching sprockets-rails 3.2.1
+Installing sprockets-rails 3.2.1
+Fetching rails 6.0.2.2
+Installing rails 6.0.2.2
+Fetching rubyzip 2.3.0
+Installing rubyzip 2.3.0
+Fetching selenium-webdriver 3.142.7
+Installing selenium-webdriver 3.142.7
+Fetching spring 2.1.0
+Installing spring 2.1.0
+Fetching spring-watcher-listen 2.0.1
+Installing spring-watcher-listen 2.0.1
+Fetching sqlite3 1.4.2
+Installing sqlite3 1.4.2 with native extensions
+Fetching web-console 4.0.1
+Installing web-console 4.0.1
+Fetching webdrivers 4.3.0
+Installing webdrivers 4.3.0
+Bundle complete! 14 Gemfile dependencies, 67 gems now installed.
+Bundled gems are installed into `./vendor/bundle`
+Post-install message from i18n:
+
+HEADS UP! i18n 1.1 changed fallbacks to exclude default locale.
+But that may break your application.
+
+If you are upgrading your Rails application from an older version of Rails:
+
+Please check your Rails app for 'config.i18n.fallbacks = true'.
+If you're using I18n (>= 1.1.0) and Rails (< 5.2.2), this should be
+'config.i18n.fallbacks = [I18n.default_locale]'.
+If not, fallbacks will be broken in your app by I18n 1.1.x.
+
+If you are starting a NEW Rails application, you can ignore this notice.
+
+For more info see:
+https://github.com/svenfuchs/i18n/releases/tag/v1.1.0
+

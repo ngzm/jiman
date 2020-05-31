@@ -1,0 +1,37 @@
+#
+# Rails の CORS 対策でハマったのでメモ
+#
+Rails に対して CORS でリクエストすると、CORS エラーとなる。
+対策として、次をセットアップする。
+
+rack-cors
+https://github.com/cyu/rack-cors
+
+上記で GET と HEAD は可能となったが、POST や PUT、 PATCH などの更新系は、CSRF-token がないなどのエラーとなった。
+このエラーは、そもそも  Rails アプリケーションで HTML を取得する際に、HTTP-Header や FORM の hideen で設定される token である。
+
+この対策としては、当該システムは、Rails を API の endpoint として使用しているため、Rails を API モードに変更することで、解決できる。
+すなわち Rails アプリケーションで行っている CSRF-token などのチェックを行わないモードにする。
+設定内容は以下の通り。
+
+(1) config/application.rb
+```
+    config.api_only = true
+```
+
+(2) config/environments/development.rb
+```
+  config.debug_exception_response_format = :api
+```
+
+(3) app/controller/application_controller.rb
+```
+# class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
+```
+
+API モードの参考情報
+https://morizyun.github.io/blog/rails-api-5.0.0.beta.2/
+
+上記により、POST や PUT、 PATCH などの更新系も正常に CORS で受け付けるようになった。
+一方で、当該モードはどこからのリクエストでも受け付けそうなので、別途アプリケーション側での認証を実装する必要があると言える。

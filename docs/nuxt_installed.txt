@@ -1,0 +1,69 @@
+naoki@naomac:~/DEV/jiman 2020/04/12 16:05:44 #230
+% npx create-nuxt-app jmnapp
+
+create-nuxt-app v2.15.0
+✨  Generating Nuxt.js project in jmnapp
+? Project name jmnapp
+? Project description Let's be pride of  your some jiman products.
+? Author name ngzm
+? Choose programming language JavaScript
+? Choose the package manager Npm
+? Choose UI framework Vuetify.js
+? Choose custom server framework None (Recommended)
+? Choose Nuxt.js modules Axios
+? Choose linting tools ESLint, Prettier
+? Choose test framework None
+? Choose rendering mode Universal (SSR)
+? Choose development tools jsconfig.json (Recommended for VS Code)
+npm WARN deprecated core-js@2.6.11: core-js@<3 is no longer maintained and not recommended for usage due to the
+number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
+
+
+
+🎉  Successfully created project jmnapp
+
+  To get started:
+
+	cd jmnapp
+	npm run dev
+
+  To build & start for production:
+
+	cd jmnapp
+	npm run build
+	npm run start
+
+
+
+naoki@naomac:~/DEV/jiman 2020/04/12 16:16:23 #232
+% cd jmnapp
+naoki@naomac:~/DEV/jiman/jmnapp 2020/04/12 16:16:26 #233
+% npm run dev
+
+> jmnapp@1.0.0 dev /Users/naoki/DEV/jiman/jmnapp
+> nuxt
+
+
+   ╭─────────────────────────────────────────────╮
+   │                                             │
+   │   Nuxt.js v2.12.2                           │
+   │   Running in development mode (universal)   │
+   │                                             │
+   │   Listening on: http://localhost:3000/      │
+   │                                             │
+   ╰─────────────────────────────────────────────╯
+
+ℹ Preparing project for development                                                                   16:16:47
+ℹ Initial build may take a while                                                                      16:16:48
+✔ Builder initialized                                                                                 16:16:48
+✔ Nuxt files generated                                                                                16:16:48
+
+✔ Client
+  Compiled successfully in 17.90s
+
+✔ Server
+  Compiled successfully in 15.99s
+
+ℹ Waiting for file changes                                                                            16:17:09
+ℹ Memory usage: 448 MB (RSS: 566 MB)                                                                  16:17:09
+ℹ Listening on: http://localhost:3000/                                                                16:17:09
