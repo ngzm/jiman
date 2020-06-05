@@ -20,6 +20,16 @@
             <h4>作品ページ URL</h4>
             <p class="pa-2 grey darken-2 white--text">{{ jiman.url }}</p>
           </v-card-text>
+          <v-card-text class="pt-3 font-weight-bold">
+            <h4>作品概要</h4>
+            <p class="pa-2 grey darken-2 white--text">
+              {{ jiman.description }}
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" class="px-md-4 px-sm-2 px-1">
+        <v-card class="mt-2">
           <v-card-text class="pt-4 font-weight-bold">
             <h4>カテゴリ1</h4>
             <p class="pa-2 grey darken-2 white--text">
@@ -40,12 +50,6 @@
               {{
                 jiman.categories[2] ? jiman.categories[2].name : '-- 未設定 --'
               }}
-            </p>
-          </v-card-text>
-          <v-card-text class="pt-3 font-weight-bold">
-            <h4>作品概要</h4>
-            <p class="pa-2 grey darken-2 white--text">
-              {{ jiman.description }}
             </p>
           </v-card-text>
           <v-card-text class="pt-3 font-weight-bold">
