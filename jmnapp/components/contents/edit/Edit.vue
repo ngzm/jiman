@@ -72,7 +72,7 @@ export default {
       this.mode = this.ENUM.CONFIRM
     },
     async onSend() {
-      const sendData = {
+      let sendData = {
         title: this.jiman.title,
         description: this.jiman.description,
         url: this.jiman.url,
@@ -80,12 +80,15 @@ export default {
         point2: this.jiman.point2,
         point3: this.jiman.point3,
         point4: this.jiman.point4,
-        imagedata: {
+        categories: this.jiman.categories
+      }
+      if (this.jiman.imagedata && this.jiman.imagedata.base64data) {
+        const imagedata = {
           name: this.jiman.imagedata.name,
           type: this.jiman.imagedata.type,
           base64data: this.jiman.imagedata.base64data.split(',')[1]
-        },
-        categories: this.jiman.categories
+        }
+        sendData = { ...sendData, imagedata }
       }
       console.log(sendData)
       const ret = await this.$axios

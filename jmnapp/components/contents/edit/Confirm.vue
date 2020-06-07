@@ -5,6 +5,16 @@
         <h4 class="blue--text">入力内容をご確認ください</h4>
       </v-col>
     </v-row>
+    <v-row no-gutters justify="end">
+      <v-col cols="auto" class="px-md-4 px-sm-2 xs-1">
+        <v-btn class="info font-weight-bold" @click="submit">
+          送信
+        </v-btn>
+        <v-btn class="warning font-weight-bold" @click="back">
+          戻る
+        </v-btn>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12" md="6" class="px-md-4 px-sm-2 px-1">
         <v-card class="mt-2">
@@ -75,16 +85,6 @@
             </p>
           </v-card-text>
         </v-card>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="12" class="px-md-4 px-sm-2 xs-1">
-        <v-btn class="info font-weight-bold" @click="submit">
-          送信
-        </v-btn>
-        <v-btn class="warning font-weight-bold" @click="back">
-          戻る
-        </v-btn>
       </v-col>
     </v-row>
   </div>

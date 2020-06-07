@@ -45,12 +45,6 @@ module Api
       raise RecordNotFound, 'Not found' if @jiman.nil?
 
       jiman_data(jiman_params)
-
-      puts '-------------------------'
-      puts @jiman
-      puts '-------------------------'
-      puts jiman_params[:imagedata]
-
       @jiman.image_text(
         jiman_params[:imagedata][:name],
         jiman_params[:imagedata][:type],
@@ -101,7 +95,7 @@ module Api
         :title, :description, :url,
         :point1, :point2, :point3, :point4, :point5, :point6,
         imagedata: %i[name type base64data],
-        categories: []
+        categories: [:id, :name]
       )
     end
 
