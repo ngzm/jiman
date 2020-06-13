@@ -16,8 +16,6 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <!-- User icon -->
-      <LoginUser v-if="authenticated" />
       <!-- User Menu -->
       <UserMenu v-if="authenticated" />
       <!-- Right Menu -->
@@ -36,14 +34,12 @@
 
 <script>
 import CategoryList from '~/components/frames/CategoryList'
-import LoginUser from '~/components/frames/LoginUser'
 import UserMenu from '~/components/frames/UserMenu'
 import WelcomeBar from '~/components/frames/WelcomeBar'
 
 export default {
   components: {
     CategoryList,
-    LoginUser,
     UserMenu,
     WelcomeBar
   },
@@ -58,6 +54,7 @@ export default {
   },
   computed: {
     authenticated() {
+      console.log(this.$store.state.auth)
       return this.$store.state.auth.loggedIn
     }
   }

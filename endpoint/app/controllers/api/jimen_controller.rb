@@ -41,28 +41,16 @@ module Api
     end
 
     def update
-      @jiman = Jiman.includes(:categories).find_by_id(@id)
+      @jiman = Jiman.find(@id)
       raise RecordNotFound, 'Not found' if @jiman.nil?
 
-      jiman_data(jiman_params)
-      @jiman.image_text(
-        jiman_params[:imagedata][:name],
-        jiman_params[:imagedata][:type],
-        jiman_params[:imagedata][:base64data]
-      )
-      @jiman.save!
+      Jiman.update_jiman(@jiman, jiman_params)
       render 'show', formats: :json, handlers: 'jbuilder'
     end
 
     def create
       @jiman = Jiman.new
-      jiman_data(jiman_params)
-      @jiman.image_text(
-        jiman_params[:imagedata][:name],
-        jiman_params[:imagedata][:type],
-        jiman_params[:imagedata][:imgdata]
-      )
-      @jiman.save!
+      Jiman.update_jiman(@jiman, jiman_params)
       render 'show', formats: :json, handlers: 'jbuilder'
     end
 
@@ -97,16 +85,6 @@ module Api
         imagedata: %i[name type base64data],
         categories: [:id, :name]
       )
-    end
-
-    def jiman_data(params)
-      @jiman.title = params[:title]
-      @jiman.description = params[:description]
-      @jiman.url = params[:url]
-      @jiman.point1 = params[:point1]
-      @jiman.point2 = params[:point2].present? ? params[:point2] : nil
-      @jiman.point3 = params[:point3].present? ? params[:point3] : nil
-      @jiman.point4 = params[:point4].present? ? params[:point4] : nil
     end
   end
 end

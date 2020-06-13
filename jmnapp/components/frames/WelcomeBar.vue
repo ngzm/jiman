@@ -1,9 +1,9 @@
 <template>
   <v-snackbar v-model="displayme" :timeout="3000" color="success">
-    <span style="color: black">
+    <span class="font-weight-bold">
       {{ message }}
     </span>
-    <v-btn text class="hidden-xs-only" color="black" @click.native="cancel">
+    <v-btn text class="hidden-xs-only font-weight-bold" @click.native="cancel">
       Close
     </v-btn>
   </v-snackbar>

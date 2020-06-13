@@ -1,7 +1,7 @@
 <template>
   <v-card color="grey darken-2" class="white--text" flat>
     <a href="" @click.stop.prevent="$emit('onSelect')">
-      <v-img :src="item.image" height="200px" />
+      <v-img :src="imgsrc" height="200px" />
     </a>
     <v-card-text class="g-info-container">
       <div class="left">
@@ -29,6 +29,9 @@ export default {
   computed: {
     intStar() {
       return this.item.star ? Math.round(this.item.star) : 0
+    },
+    imgsrc() {
+      return `${process.env.ENDPOINT_URL}${this.item.image.url}`
     },
     labelGtype() {
       return this.item.gtype === 1

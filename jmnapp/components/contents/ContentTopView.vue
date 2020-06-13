@@ -2,7 +2,7 @@
   <v-card>
     <template v-if="item.url">
       <a href="" class="titlelink" @click.stop.prevent="$emit('onJump')">
-        <v-img :src="item.image" min-height="300px" max-height="580px">
+        <v-img :src="imgsrc" min-height="300px" max-height="580px">
           <v-row
             align="center"
             justify="center"
@@ -39,6 +39,11 @@
 export default {
   props: {
     item: { default: () => {}, type: Object }
+  },
+  computed: {
+    imgsrc() {
+      return `${process.env.ENDPOINT_URL}${this.item.image.url}`
+    }
   }
 }
 </script>

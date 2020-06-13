@@ -14,7 +14,7 @@ export const getters = {
 
 export const mutations = {
   SET_CATEGORIES(state, datas) {
-    state.categories = datas
+    Object.assign(state.categories, datas)
   }
 }
 
