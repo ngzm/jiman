@@ -3,6 +3,10 @@ json.extract! @jiman,   \
               :point1, :point2, :point3, :point4, \
               :access, :star, :created_at, :updated_at
 
+json.user do
+  json.extract! @jiman.user, :id, :name, :full_name, :email, :image, :admin
+end
+
 json.categories do
   json.array!(@categories) do |ctg|
     json.id(ctg.id)

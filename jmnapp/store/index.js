@@ -1,5 +1,6 @@
 export const state = () => ({
-  categories: []
+  categories: [],
+  loginUser: {}
 })
 
 export const getters = {
@@ -13,18 +14,30 @@ export const getters = {
 }
 
 export const mutations = {
-  SET_CATEGORIES(state, datas) {
-    Object.assign(state.categories, datas)
+  SET_CATEGORIES(state, data) {
+    Object.assign(state.categories, data)
+  },
+  SET_LOGIN_USER(state, data) {
+    Object.assign(state.loginUser, data)
+    console.log('state loginUser')
+    console.log(state.loginUser)
   }
 }
 
 export const actions = {
   async nuxtServerInit({ commit }) {
-    const datas = await this.$axios
+    const categories = await this.$axios
       .$get(`${process.env.ENDPOINT_URL}/api/categories`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    commit('SET_CATEGORIES', datas)
+    commit('SET_CATEGORIES', categories)
+
+    const user = await this.$axios
+      .$get(`${process.env.ENDPOINT_URL}/api/autheduser`)
+      .catch((err) => {
+        console.log(`error !! ${err}`)
+      })
+    commit('SET_LOGIN_USER', user)
   }
 }

@@ -7,12 +7,17 @@
       ></v-breadcrumbs>
       <v-row align="baseline" justify="center" class="mb-8">
         <v-col cols="auto">
-          <v-avatar v-if="hasPicture" color="grey" size="160">
-            <img :src="authUser.picture" alt="authUserName" />
+          <v-avatar v-if="userImage" color="grey" size="160">
+            <img :src="userImage" alt="user image" />
           </v-avatar>
         </v-col>
         <v-col cols="auto">
-          <h4>{{ authUserName }} さん</h4>
+          <p class="title">{{ user ? user.name : '名無し' }} さん</p>
+          <p v-if="isMypage">
+            {{ user ? user.full_name : 'フルネーム' }}
+            <br />
+            {{ user ? user.email : 'EMail' }}
+          </p>
         </v-col>
       </v-row>
       <v-row>
@@ -48,28 +53,42 @@ export default {
     return /^\d+$/.test(params.uid)
   },
   async asyncData(context) {
-    const datas = await context.$axios
-      .$get(`${context.env.ENDPOINT_URL}/api/jimen/list/${context.params.uid}`)
+    const jdata = await context.$axios
+      .$get(`${context.env.ENDPOINT_URL}/api/jimen/ulist/${context.params.uid}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    return datas ? { jimen: datas } : { jimen: [] }
+    const udata = await context.$axios
+      .$get(`${context.env.ENDPOINT_URL}/api/users/${context.params.uid}`)
+      .catch((err) => {
+        console.log(`error !! ${err}`)
+      })
+    return { jimen: jdata, user: udata }
   },
   computed: {
     uid() {
       return this.$route.params.uid
     },
-    authUser() {
-      return this.$store.state.auth.user
-    },
-    authUserName() {
-      return this.$store.state.auth.user.given_name
-    },
-    hasPicture() {
-      if (this.authUser) {
-        return !!this.authUser.picture
+    userImage() {
+      if (this.user.image) {
+        return this.user.image
       } else {
         return false
+      }
+    },
+    isMypage() {
+      if (this.$store.state.loginUser && this.user) {
+        if (this.$store.state.loginUser.id === this.user.id) {
+          return true
+        }
+      }
+      return false
+    },
+    userText() {
+      if (this.isMypage) {
+        return 'マイページ'
+      } else {
+        return '作者のページ'
       }
     },
     breadItems() {
@@ -80,7 +99,7 @@ export default {
           to: '/'
         },
         {
-          text: '作者のページ',
+          text: `${this.userText}`,
           disabled: true,
           to: `/users/${this.uid}`
         }
@@ -89,7 +108,7 @@ export default {
   },
   methods: {
     onSelect(id) {
-      this.$router.push(`/items/u${this.uid}/${id}`)
+      this.$router.push(`/useritems/${this.uid}/${id}`)
     }
   }
 }

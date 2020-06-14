@@ -19,7 +19,7 @@
           <v-list-item-title>マイページ</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/items/edit/new">
+      <v-list-item to="/useritems/edit/new">
         <v-list-item-action>
           <v-icon>mdi-text-box-multiple-outline</v-icon>
         </v-list-item-action>
@@ -60,7 +60,11 @@ export default {
       }
     },
     toUser() {
-      return `/users/1`
+      if (this.authUser && this.$store.state.loginUser)
+        return `/users/${this.$store.state.loginUser.id}`
+      else {
+        return '/'
+      }
     }
   },
   methods: {

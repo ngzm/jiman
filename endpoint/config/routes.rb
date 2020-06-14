@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     # Api access to jimen searched by category_id
     get 'jimen/list/:category_id', to: 'jimen#list', format: false
 
+    # Api access to jimen searched by user_id
+    get 'jimen/ulist/:user_id', to: 'jimen#ulist', format: false
+
     # Api access to jump detail pages, meaning count-up access counter.
     post 'jimen/jump/:id', to: 'jimen#jump', format: false
 
@@ -17,5 +20,9 @@ Rails.application.routes.draw do
     get 'reviews/show/:jiman_id', to: 'reviews#show', format: false
     get 'reviews/list/:jiman_id', to: 'reviews#list', format: false
     post 'reviews/:jiman_id', to: 'reviews#save', format: false
+
+    # Api access to user resources
+    resources :users, only: %i[index show], format: false
+    get 'autheduser', to: 'users#authed', format: false
   end
 end

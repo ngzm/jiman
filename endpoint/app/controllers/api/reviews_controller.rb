@@ -5,12 +5,12 @@ module Api
   # reviews-api controller of the jimen
   #
   class ReviewsController < ApiController
+    before_action :authenticated?, only: %i[show save]
     before_action :check_jiman_id
     before_action :parse_json, only: %i[save]
-    before_action :authenticated?, only: %i[show save]
 
     def show
-      @review = Review.find_by(jiman_id: @jiman_id, user_id: @user_id)
+      @review = Review.find_by(jiman_id: @jiman_id, user_id: @authed_user.id)
       raise RecordNotFound, 'Not found' if @review.nil?
 
       render 'show', formats: :json, handlers: 'jbuilder'
@@ -24,12 +24,12 @@ module Api
     end
 
     def save
-      @review = Review.find_by(jiman_id: @jiman_id, user_id: @user_id)
+      @review = Review.find_by(jiman_id: @jiman_id, user_id: @authed_user.id)
       if @review.present?
         up = {}.merge(review_params)
         @review.update_review up
       else
-        up = { jiman_id: @jiman_id, user_id: @user_id }.merge(review_params)
+        up = { jiman_id: @jiman_id, user_id: @authed_user.id }.merge(review_params)
         @review = Review.new up
         @review.save_review
       end

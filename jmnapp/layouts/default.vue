@@ -54,7 +54,6 @@ export default {
   },
   computed: {
     authenticated() {
-      console.log(this.$store.state.auth)
       return this.$store.state.auth.loggedIn
     }
   }

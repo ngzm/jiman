@@ -31,16 +31,12 @@ class Jiman < ApplicationRecord
   validate :image_size
 
   class << self
-    def update_jiman(jiman, params)
+    def save_jiman(jiman, user_id, params)
       Jiman.transaction do
         jiman.updated_data = params
+        jiman.user_id = user_id
         jiman.base64image = params[:imagedata] if params[:imagedata].present?
-
-        jiman.categories.delete_all if jiman.categories.present?
-        params[:categories].each do |c|
-          catg = Category.find(c[:id])
-          jiman.categories.push catg if catg.present?
-        end
+        jiman.reresist_categories(params[:categories])
         jiman.save!
       end
     end
@@ -68,6 +64,14 @@ class Jiman < ApplicationRecord
       Base64.decode64(data[:base64data])
     )
     self.image = io
+  end
+
+  def reresist_categories(categories)
+    self.categories.delete_all if self.categories.present?
+    categories.each do |c|
+      catg = Category.find(c[:id])
+      self.categories.push catg if catg.present?
+    end
   end
 
   private

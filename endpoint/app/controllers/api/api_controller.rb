@@ -52,11 +52,7 @@ module Api
     def authenticated?
       # raise Auths::Error::Unauthorized, 'Faild to authenticate' \
       #   unless authenticate_token
-      user = verify_auth_token(authenticate_tokens)
-      @user_id = user.id
-      puts '----------------'
-      puts @user_id
-      puts '----------------'
+      @authed_user = verify_auth_token(authenticate_tokens)
     end
 
     def authenticate_tokens

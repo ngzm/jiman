@@ -52,7 +52,7 @@ export default {
     ReviewDialog
   },
   validate({ params }) {
-    return /^\d+$/.test(params.cid) && /^\d+$/.test(params.id)
+    return /^\d+$/.test(params.uid) && /^\d+$/.test(params.id)
   },
   async asyncData(context) {
     let jdata = await context.$axios
@@ -78,8 +78,8 @@ export default {
     }
   },
   computed: {
-    cid() {
-      return this.$route.params.cid
+    uid() {
+      return this.$route.params.uid
     },
     id() {
       return this.$route.params.id
@@ -94,12 +94,12 @@ export default {
         {
           text: this.getParentName,
           disabled: false,
-          to: `/categories/${this.cid}`
+          to: `/users/${this.uid}`
         },
         {
           text: this.jiman.title,
           disabled: true,
-          to: `/items/${this.cid}/${this.id}`
+          to: `/useritems/${this.uid}/${this.id}`
         }
       ]
     },
@@ -116,11 +116,11 @@ export default {
       return false
     },
     getParentName() {
-      if (this.cid) {
-        const category = this.$store.getters.getCategoryById(this.cid)
-        return category ? category.name : 'undefined'
+      if (this.isMypage) {
+        return 'マイページ'
+      } else {
+        return '作者のページ'
       }
-      return 'undefined'
     }
   },
   methods: {
