@@ -70,17 +70,15 @@ export default {
       return this.$route.params.uid
     },
     userImage() {
-      if (this.user.image) {
+      if (this.user && this.user.image) {
         return this.user.image
       } else {
         return false
       }
     },
     isMypage() {
-      if (this.$store.state.loginUser && this.user) {
-        if (this.$store.state.loginUser.id === this.user.id) {
-          return true
-        }
+      if (this.$store.getters.isLogin && this.user) {
+        return this.$store.getters.getLoginUser.id === this.user.id
       }
       return false
     },

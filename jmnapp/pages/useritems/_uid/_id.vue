@@ -104,14 +104,8 @@ export default {
       ]
     },
     isMypage() {
-      if (
-        this.$store.state.auth.loggedIn &&
-        this.$store.state.loginUser &&
-        this.jiman.user
-      ) {
-        if (this.$store.state.loginUser.id === this.jiman.user.id) {
-          return true
-        }
+      if (this.$store.getters.isLogin) {
+        return this.$store.getters.getLoginUser.id === this.jiman.user.id
       }
       return false
     },

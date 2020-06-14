@@ -10,6 +10,15 @@ export const getters = {
     } else {
       return 'undefined'
     }
+  },
+  isLogin(state, getters, rootState) {
+    return rootState.auth.loggedIn
+  },
+  getLoginUser(state, getters, rootState) {
+    if (rootState.auth.loggedIn) {
+      return state.loginUser
+    }
+    return {}
   }
 }
 
