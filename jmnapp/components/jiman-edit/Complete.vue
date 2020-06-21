@@ -1,15 +1,15 @@
 <template>
   <v-card class="mt-4">
     <v-card-title class="pt-4">
-      <h3 class="subheading blue--text">送信完了</h3>
+      <h4 class="blue--text">登録完了</h4>
     </v-card-title>
     <v-card-text class="pt-2">
-      <h5 class="subheading blue--text">
-        {{ jiman.title }} 様のお問い合わせをサイト管理者に送信しました
-      </h5>
+      <h4>{{ jiman.title }} の登録が完了しました。</h4>
     </v-card-text>
     <v-card-actions class="ml-3 pt-3 pb-4">
-      <v-btn @click="restart">戻る</v-btn>
+      <v-btn class="success font-weight-bold" @click="restart">
+        登録フォームに戻る
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

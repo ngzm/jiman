@@ -9,15 +9,13 @@
     >
       <CategoryList />
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar app :clipped-left="clipped" fixed flat dark color="indigo">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <!-- User icon -->
-      <LoginUser v-if="authenticated" />
       <!-- User Menu -->
       <UserMenu v-if="authenticated" />
       <!-- Right Menu -->
@@ -36,14 +34,12 @@
 
 <script>
 import CategoryList from '~/components/frames/CategoryList'
-import LoginUser from '~/components/frames/LoginUser'
 import UserMenu from '~/components/frames/UserMenu'
 import WelcomeBar from '~/components/frames/WelcomeBar'
 
 export default {
   components: {
     CategoryList,
-    LoginUser,
     UserMenu,
     WelcomeBar
   },

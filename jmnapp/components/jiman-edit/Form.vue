@@ -202,8 +202,7 @@ export default {
         return this.value ? this.value.title : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { title: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { title: data })
       }
     },
     description: {
@@ -211,8 +210,7 @@ export default {
         return this.value ? this.value.description : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { description: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { description: data })
       }
     },
     url: {
@@ -220,8 +218,7 @@ export default {
         return this.value ? this.value.url : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { url: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { url: data })
       }
     },
     imagesrc() {
@@ -243,7 +240,7 @@ export default {
         return null
       },
       set(data) {
-        let imagedata = null
+        let imagedata = { name: '', type: '', base64data: null }
         if (this.file && data) {
           imagedata = {
             name: this.file.name,
@@ -251,8 +248,7 @@ export default {
             base64data: data
           }
         }
-        const jiman = Object.assign(this.value, { imagedata })
-        this.$emit('input', jiman)
+        this.$emit('input', { imagedata })
       }
     },
     category1: {
@@ -261,13 +257,12 @@ export default {
         return categories ? (categories[0] ? categories[0].id : null) : null
       },
       set(data) {
-        const ctgs = this.value ? this.value.categories : []
+        const ctgs = (this.value ? this.value.categories : []).concat()
         ctgs.splice(0, 1, {
           id: data,
           name: this.getCategoryName(data)
         })
-        const jiman = Object.assign(this.value, { categories: ctgs })
-        this.$emit('input', jiman)
+        this.$emit('input', { categories: ctgs })
       }
     },
     category2: {
@@ -276,13 +271,12 @@ export default {
         return categories ? (categories[1] ? categories[1].id : null) : null
       },
       set(data) {
-        const ctgs = this.value ? this.value.categories : []
+        const ctgs = (this.value ? this.value.categories : []).concat()
         ctgs.splice(1, 1, {
           id: data,
           name: this.getCategoryName(data)
         })
-        const jiman = Object.assign(this.value, { categories: ctgs })
-        this.$emit('input', jiman)
+        this.$emit('input', { categories: ctgs })
       }
     },
     category3: {
@@ -291,13 +285,12 @@ export default {
         return categories ? (categories[2] ? categories[2].id : null) : null
       },
       set(data) {
-        const ctgs = this.value ? this.value.categories : []
+        const ctgs = (this.value ? this.value.categories : []).concat()
         ctgs.splice(2, 1, {
           id: data,
           name: this.getCategoryName(data)
         })
-        const jiman = Object.assign(this.value, { categories: ctgs })
-        this.$emit('input', jiman)
+        this.$emit('input', { categories: ctgs })
       }
     },
     point1: {
@@ -305,8 +298,7 @@ export default {
         return this.value ? this.value.point1 : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { point1: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { point1: data })
       }
     },
     point2: {
@@ -314,8 +306,7 @@ export default {
         return this.value ? this.value.point2 : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { point2: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { point2: data })
       }
     },
     point3: {
@@ -323,8 +314,7 @@ export default {
         return this.value ? this.value.point3 : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { point3: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { point3: data })
       }
     },
     point4: {
@@ -332,8 +322,7 @@ export default {
         return this.value ? this.value.point4 : ''
       },
       set(data) {
-        const jiman = Object.assign(this.value, { point4: data })
-        this.$emit('input', jiman)
+        this.$emit('input', { point4: data })
       }
     },
     invalid() {
@@ -387,7 +376,7 @@ export default {
     clear() {
       this.$refs.form.reset()
       this.file = null
-      this.$emit('onClear')
+      this.$emit('onReset')
     },
     clearFile() {
       this.file = null

@@ -7,12 +7,19 @@
       ></v-breadcrumbs>
       <v-row align="baseline" justify="center" class="mb-8">
         <v-col cols="auto">
-          <v-avatar v-if="hasPicture" color="grey" size="160">
-            <img :src="authUser.picture" alt="authUserName" />
+          <v-avatar v-if="isUser" color="grey" size="160">
+            <img :src="userJimen.user.image" alt="user image" />
           </v-avatar>
         </v-col>
         <v-col cols="auto">
-          <h4>{{ authUserName }} さん</h4>
+          <p class="title">
+            {{ isUser ? userJimen.user.name : '名無し' }} さん
+          </p>
+          <p v-if="isMypage">
+            {{ isUser ? userJimen.user.full_name : 'フルネーム' }}
+            <br />
+            {{ isUser ? userJimen.user.email : 'EMail' }}
+          </p>
         </v-col>
       </v-row>
       <v-row>
@@ -22,7 +29,7 @@
       </v-row>
       <v-row>
         <v-col
-          v-for="item in jimen"
+          v-for="item in userJimen.jimen"
           :key="item.id"
           cols="12"
           sm="6"
@@ -38,59 +45,55 @@
 </template>
 
 <script>
-import GridItem from '~/components/contents/GridItem'
+import { Vue, Component } from 'nuxt-property-decorator'
+import GridItem from '~/components/jiman/grid-item'
 
-export default {
-  components: {
-    GridItem
-  },
-  validate({ params }) {
-    return /^\d+$/.test(params.uid)
-  },
+@Component({
+  components: { GridItem },
   async asyncData(context) {
-    const datas = await context.$axios
-      .$get(`${context.env.ENDPOINT_URL}/api/jimen/list/${context.params.uid}`)
+    const data = await context.$axios
+      .$get(`${context.env.ENDPOINT_URL}/api/jimen/ulist/${context.params.uid}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    return datas ? { jimen: datas } : { jimen: [] }
-  },
-  computed: {
-    uid() {
-      return this.$route.params.uid
-    },
-    authUser() {
-      return this.$store.state.auth.user
-    },
-    authUserName() {
-      return this.$store.state.auth.user.given_name
-    },
-    hasPicture() {
-      if (this.authUser) {
-        return !!this.authUser.picture
-      } else {
-        return false
+    return data ? { userJimen: data } : { userJimen: [] }
+  }
+})
+export default class UidJimen extends Vue {
+  validate({ params }) {
+    return /^\d+$/.test(params.uid)
+  }
+
+  get uid() {
+    return this.$route.params.uid
+  }
+
+  get breadItems() {
+    return [
+      {
+        text: 'Home',
+        disabled: false,
+        to: '/'
+      },
+      {
+        text: this.isMypage ? 'マイページ' : '作者のページ',
+        disabled: true,
+        to: `/users/${this.uid}`
       }
-    },
-    breadItems() {
-      return [
-        {
-          text: 'Home',
-          disabled: false,
-          to: '/'
-        },
-        {
-          text: '作者のページ',
-          disabled: true,
-          to: `/users/${this.uid}`
-        }
-      ]
-    }
-  },
-  methods: {
-    onSelect(id) {
-      this.$router.push(`/items/u${this.uid}/${id}`)
-    }
+    ]
+  }
+
+  get isMypage() {
+    if (!this.$store.getters.isLogin) return false
+    return this.$store.getters.getLoginUser.id === this.userJimen.user.id
+  }
+
+  get isUser() {
+    return this.userJimen && this.userJimen.user
+  }
+
+  onSelect(id) {
+    this.$router.push(`/useritems/${this.uid}/${id}`)
   }
 }
 </script>

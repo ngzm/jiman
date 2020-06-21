@@ -30,19 +30,48 @@ class Jiman < ApplicationRecord
   validates :star, numericality: true, allow_blank: true
   validate :image_size
 
+  class << self
+    def save_jiman(jiman, user_id, params)
+      Jiman.transaction do
+        jiman.updated_data = params
+        jiman.user_id = user_id
+        jiman.base64image = params[:imagedata] if params[:imagedata].present?
+        jiman.reresist_categories(params[:categories])
+        jiman.save!
+      end
+    end
+  end
+
   # increment jiman access counter
   def increment_access
     update! access: access + 1
   end
 
-  def image_text(file_name, content_type, text)
-    puts '=============='
-    puts file_name
-    puts content_type
-    puts text
-    puts '=============='
-    io = CarrierStringIO.new(file_name, content_type, Base64.decode64(text))
+  def updated_data=(data)
+    self.title = data[:title]
+    self.description = data[:description]
+    self.url = data[:url]
+    self.point1 = data[:point1]
+    self.point2 = data[:point2].present? ? data[:point2] : nil
+    self.point3 = data[:point3].present? ? data[:point3] : nil
+    self.point4 = data[:point4].present? ? data[:point4] : nil
+  end
+
+  def base64image=(data)
+    io = CarrierStringIO.new(
+      data[:name],
+      data[:type],
+      Base64.decode64(data[:base64data])
+    )
     self.image = io
+  end
+
+  def reresist_categories(categories)
+    self.categories.delete_all if self.categories.present?
+    categories.each do |c|
+      catg = Category.find(c[:id])
+      self.categories.push catg if catg.present?
+    end
   end
 
   private

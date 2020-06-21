@@ -23,15 +23,11 @@
 </template>
 
 <script>
-import GridItem from '~/components/contents/GridItem'
+import { Vue, Component } from 'nuxt-property-decorator'
+import GridItem from '~/components/jiman/grid-item'
 
-export default {
-  components: {
-    GridItem
-  },
-  validate({ params }) {
-    return /^\d+$/.test(params.cid)
-  },
+@Component({
+  components: { GridItem },
   async asyncData(context) {
     const datas = await context.$axios
       .$get(`${context.env.ENDPOINT_URL}/api/jimen/list/${context.params.cid}`)
@@ -39,34 +35,39 @@ export default {
         console.log(`error !! ${err}`)
       })
     return datas ? { jimen: datas } : { jimen: [] }
-  },
-  computed: {
-    cid() {
-      return this.$route.params.cid
-    },
-    breadItems() {
-      return [
-        {
-          text: 'Home',
-          disabled: false,
-          to: '/'
-        },
-        {
-          text: this.getCategoryName,
-          disabled: true,
-          to: `/categories/${this.cid}`
-        }
-      ]
-    },
-    getCategoryName() {
-      const category = this.$store.getters.getCategoryById(this.cid)
-      return category ? category.name : 'undefined'
-    }
-  },
-  methods: {
-    onSelect(id) {
-      this.$router.push(`/items/${this.cid}/${id}`)
-    }
+  }
+})
+export default class CidJimen extends Vue {
+  validate({ params }) {
+    return /^\d+$/.test(params.cid)
+  }
+
+  get cid() {
+    return this.$route.params.cid
+  }
+
+  get breadItems() {
+    return [
+      {
+        text: 'Home',
+        disabled: false,
+        to: '/'
+      },
+      {
+        text: this.getCategoryName,
+        disabled: true,
+        to: `/categories/${this.cid}`
+      }
+    ]
+  }
+
+  get getCategoryName() {
+    const category = this.$store.getters.getCategoryById(this.cid)
+    return category ? category.name : 'undefined'
+  }
+
+  onSelect(id) {
+    this.$router.push(`/items/${this.cid}/${id}`)
   }
 }
 </script>

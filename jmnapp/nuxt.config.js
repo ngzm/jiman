@@ -115,7 +115,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken3,
@@ -142,6 +142,15 @@ export default {
    ** Build configuration
    */
   build: {
+    babel: {
+      presets({ isServer }) {
+        return [
+          [
+            "@nuxt/babel-preset-app", { loose: true }
+          ]
+        ]
+      }
+    },
     /*
      ** You can extend webpack config here
      */

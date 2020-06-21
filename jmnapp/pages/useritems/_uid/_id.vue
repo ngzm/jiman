@@ -17,7 +17,6 @@
 
 <script>
 import { Vue, Component } from 'nuxt-property-decorator'
-
 import EditingNav from '~/components/jiman/editing-nav'
 import Content from '~/components/jiman/content'
 
@@ -37,8 +36,11 @@ import Content from '~/components/jiman/content'
 })
 export default class IdJimanItems extends Vue {
   validate({ params }) {
-    return /^\d+$/.test(params.cid) && /^\d+$/.test(params.id)
+    return /^\d+$/.test(params.uid) && /^\d+$/.test(params.id)
   }
+
+  myReview = { star: 3, comment: '' }
+  dialog = false
 
   get jimanValue() {
     return this.jiman
@@ -48,8 +50,8 @@ export default class IdJimanItems extends Vue {
     Object.assign(this.jiman, { ...value })
   }
 
-  get cid() {
-    return this.$route.params.cid
+  get uid() {
+    return this.$route.params.uid
   }
 
   get id() {
@@ -64,14 +66,14 @@ export default class IdJimanItems extends Vue {
         to: '/'
       },
       {
-        text: this.getParentName,
+        text: this.isMypage ? 'マイページ' : '作者のページ',
         disabled: false,
-        to: `/categories/${this.cid}`
+        to: `/users/${this.uid}`
       },
       {
         text: this.jiman.title,
         disabled: true,
-        to: `/items/${this.cid}/${this.id}`
+        to: `/users/${this.uid}/${this.id}`
       }
     ]
   }
@@ -79,11 +81,6 @@ export default class IdJimanItems extends Vue {
   get isMypage() {
     if (!this.$store.getters.isLogin) return false
     return this.$store.getters.getLoginUser.id === this.jiman.user.id
-  }
-
-  get getParentName() {
-    const category = this.$store.getters.getCategoryById(this.cid)
-    return category ? category.name : 'undefined'
   }
 }
 </script>

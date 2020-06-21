@@ -2,7 +2,7 @@
   <v-card>
     <template v-if="item.url">
       <a href="" class="titlelink" @click.stop.prevent="$emit('onJump')">
-        <v-img :src="item.image" min-height="300px" max-height="580px">
+        <v-img :src="imgsrc" min-height="300px" max-height="580px">
           <v-row
             align="center"
             justify="center"
@@ -36,9 +36,16 @@
 </template>
 
 <script>
-export default {
-  props: {
-    item: { default: () => {}, type: Object }
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+
+@Component({})
+export default class ContentTopView extends Vue {
+  @Prop({ type: Object, required: true }) item
+
+  get imgsrc() {
+    return this.item.image
+      ? `${process.env.ENDPOINT_URL}${this.item.image.url}`
+      : ''
   }
 }
 </script>
