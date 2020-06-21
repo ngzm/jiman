@@ -7,7 +7,7 @@
       <Detail :item="value" />
     </v-col>
     <v-col cols="12" md="6">
-      <DetailRating :item="value" :reviews="reviews" @onReview="onReview" />
+      <DetailRating :item="value" @onReview="onReview" />
     </v-col>
     <RatingDialog
       v-model="dialog"
@@ -40,9 +40,6 @@ export default class ContentJiman extends Vue {
 
   myReview = { star: 3, comment: '' }
   dialog = false
-
-  // Temp
-  reviews = []
 
   onJump() {
     this.upAccess()

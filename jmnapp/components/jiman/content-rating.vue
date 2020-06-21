@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100%">
+  <v-card color="grey lighten-3" height="100%">
     <v-card-text>
       <h5 class="mt-1 subtitle-1 font-weight-bold">詳細ページビューカウント</h5>
       <p class="mt-1 mx-2">{{ item.access }} 回</p>
@@ -35,9 +35,9 @@
     </v-card-actions>
     <v-card-text class="pt-4">
       <h5 class="subtitle-1 font-weight-bold">最新お気に入りやコメント</h5>
-      <div v-if="reviews && reviews.length > 0" class="mt-3">
-        <v-expansion-panels focusable multiple>
-          <v-expansion-panel v-for="(rv, index) in reviews" :key="index">
+      <div v-if="item.reviews && item.reviews.length > 0" class="mt-3">
+        <v-expansion-panels focusable multiple dark>
+          <v-expansion-panel v-for="(rv, index) in item.reviews" :key="index">
             <v-expansion-panel-header>
               {{ rv.user_name }}
               <!-- Can not use v-rating here -->
@@ -66,8 +66,6 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 @Component
 export default class ContentRating extends Vue {
   @Prop({ type: Object, required: true }) item
-
-  reviews = []
 
   get intStar() {
     return this.item.star ? Math.round(this.item.star) : 0

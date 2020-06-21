@@ -17,10 +17,7 @@ module Api
     end
 
     def show
-      @jiman = Jiman.includes(:categories).find_by_id(@id)
-      raise RecordNotFound, 'Not found' if @jiman.nil?
-
-      @categories = @jiman.categories
+      @jiman = Jiman.find(@id)
       render 'show', formats: :json, handlers: 'jbuilder'
     end
 

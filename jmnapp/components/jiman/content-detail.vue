@@ -1,9 +1,9 @@
 <template>
-  <v-card height="100%">
+  <v-card color="grey lighten-3" height="100%">
     <v-card-text>
       <v-row align="baseline" justify="start">
         <v-col cols="auto">
-          <v-btn icon dark :to="userPage">
+          <v-btn icon :to="userPage">
             <v-avatar v-if="isUser" color="grey" size="48">
               <v-img :src="item.user.image" alt="user image" />
             </v-avatar>

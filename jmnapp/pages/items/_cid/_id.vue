@@ -27,17 +27,12 @@ import Content from '~/components/jiman/content'
     Content
   },
   async asyncData(context) {
-    const jdata = await context.$axios
+    const data = await context.$axios
       .$get(`${context.env.ENDPOINT_URL}/api/jimen/${context.params.id}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    const rdata = await context.$axios
-      .$get(`${context.env.ENDPOINT_URL}/api/reviews/list/${context.params.id}`)
-      .catch((err) => {
-        console.log(`error !! ${err}`)
-      })
-    return { jiman: jdata, reviews: rdata }
+    return { jiman: data }
   }
 })
 export default class IdJimanItems extends Vue {

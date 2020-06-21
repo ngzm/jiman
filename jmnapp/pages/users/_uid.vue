@@ -84,10 +84,8 @@ export default class UidJimen extends Vue {
   }
 
   get isMypage() {
-    if (this.$store.getters.isLogin && this.user) {
-      return this.$store.getters.getLoginUser.id === this.uid
-    }
-    return false
+    if (!this.$store.getters.isLogin) return false
+    return this.$store.getters.getLoginUser.id === this.userJimen.user.id
   }
 
   get isUser() {
