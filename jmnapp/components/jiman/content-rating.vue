@@ -61,18 +61,20 @@
 </template>
 
 <script>
-export default {
-  props: {
-    item: { default: () => {}, type: Object },
-    reviews: { default: () => [], type: Array }
-  },
-  computed: {
-    intStar() {
-      return this.item.star ? Math.round(this.item.star) : 0
-    },
-    formatStar() {
-      return this.item.star ? this.item.star.toFixed(2) : 0.0
-    }
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class ContentRating extends Vue {
+  @Prop({ type: Object, required: true }) item
+
+  reviews = []
+
+  get intStar() {
+    return this.item.star ? Math.round(this.item.star) : 0
+  }
+
+  get formatStar() {
+    return this.item.star ? this.item.star.toFixed(2) : 0.0
   }
 }
 </script>

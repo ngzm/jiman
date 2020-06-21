@@ -10,7 +10,7 @@
         </v-icon>
       </v-btn>
     </template>
-    <v-list dense color="grey darken-3">
+    <v-list dense>
       <v-list-item :to="toUser">
         <v-list-item-action>
           <v-icon>mdi-text-box-multiple-outline</v-icon>

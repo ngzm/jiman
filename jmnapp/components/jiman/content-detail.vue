@@ -3,15 +3,17 @@
     <v-card-text>
       <v-row align="baseline" justify="start">
         <v-col cols="auto">
-          <v-btn icon dark @click="$emit('userPage')">
-            <v-avatar v-if="userImage" color="grey" size="48">
-              <img :src="userImage" alt="user image" />
+          <v-btn icon dark :to="userPage">
+            <v-avatar v-if="isUser" color="grey" size="48">
+              <v-img :src="item.user.image" alt="user image" />
             </v-avatar>
           </v-btn>
         </v-col>
         <v-col cols="auto">
           <h4>
-            <a @click="userPage">{{ userName }} さん</a>
+            <a @click.stop.prevent="$router.push(userPage)">
+              {{ isUser ? item.user.name : '' }} さん
+            </a>
           </h4>
         </v-col>
       </v-row>
@@ -40,10 +42,6 @@
       </ul>
     </v-card-text>
     <v-card-text>
-      <h5 class="mt-1 subtitle-1 font-weight-bold">詳細ページビューカウント</h5>
-      <p class="mt-1 mx-2">{{ item.access }} 回</p>
-    </v-card-text>
-    <v-card-text>
       <h5 class="subtitle-1 font-weight-bold">登録日</h5>
       <p class="mt-1 mx-2">{{ formatRegister }}</p>
     </v-card-text>
@@ -51,39 +49,29 @@
 </template>
 
 <script>
-export default {
-  props: {
-    item: { default: () => {}, type: Object }
-  },
-  computed: {
-    userName() {
-      if (this.item && this.item.user) {
-        return this.item.user.name
-      }
-      return ''
-    },
-    userImage() {
-      if (this.item && this.item.user) {
-        return this.item.user.image
-      }
-      return false
-    },
-    formatRegister() {
-      const dt = new Date(this.item.created_at)
-      const yy = dt.getFullYear()
-      const mm = dt.getMonth() + 1
-      const dd = dt.getDate()
-      const hh = dt.getHours()
-      const ms = dt.getMinutes()
-      return `${yy}/${mm}/${dd} ${hh}:${ms}`
-    }
-  },
-  methods: {
-    userPage() {
-      if (this.item && this.item.user) {
-        this.$router.push(`/users/${this.item.user.id}`)
-      }
-    }
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class ContentDetail extends Vue {
+  @Prop({ type: Object, required: true }) item
+
+  get isUser() {
+    return this.item && this.item.user
+  }
+
+  get userPage() {
+    if (!this.isUser) return ''
+    return `/users/${this.item.user.id}`
+  }
+
+  get formatRegister() {
+    const dt = new Date(this.item.created_at)
+    const yy = dt.getFullYear()
+    const mm = dt.getMonth() + 1
+    const dd = dt.getDate()
+    const hh = dt.getHours()
+    const ms = dt.getMinutes()
+    return `${yy}/${mm}/${dd} ${hh}:${ms}`
   }
 }
 </script>

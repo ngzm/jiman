@@ -5,7 +5,7 @@ module Api
   # jiman-api controller of the jimen
   #
   class JimenController < ApiController
-    before_action :authenticated?, only: %i[ulist create update]
+    before_action :authenticated?, only: %i[create update]
     before_action :check_id, only: %i[show jump update]
     before_action :parse_json, only: %i[create update]
 
@@ -38,7 +38,10 @@ module Api
       @jimen = Jiman.where(user_id: @user_id)
       raise RecordNotFound, 'No contents of jiman found' if @jimen.empty?
 
-      render 'index', formats: :json, handlers: 'jbuilder'
+      @user = User.find(@user_id)
+      raise RecordNotFound, 'Not found' if @user.nil?
+
+      render 'ulist', formats: :json, handlers: 'jbuilder'
     end
 
     def update

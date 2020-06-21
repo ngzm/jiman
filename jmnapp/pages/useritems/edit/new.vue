@@ -23,9 +23,9 @@
   </v-row>
 </template>
 <script>
-import Form from '~/components/contents/edit/Form.vue'
-import Confirm from '~/components/contents/edit/Confirm.vue'
-import Complete from '~/components/contents/edit/Complete.vue'
+import Form from '~/components/jiman-edit/Form.vue'
+import Confirm from '~/components/jiman-edit/Confirm.vue'
+import Complete from '~/components/jiman-edit/Complete.vue'
 
 export default {
   components: {

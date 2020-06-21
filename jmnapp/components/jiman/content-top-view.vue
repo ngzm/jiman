@@ -36,14 +36,16 @@
 </template>
 
 <script>
-export default {
-  props: {
-    item: { default: () => {}, type: Object }
-  },
-  computed: {
-    imgsrc() {
-      return `${process.env.ENDPOINT_URL}${this.item.image.url}`
-    }
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+
+@Component({})
+export default class ContentTopView extends Vue {
+  @Prop({ type: Object, required: true }) item
+
+  get imgsrc() {
+    return this.item.image
+      ? `${process.env.ENDPOINT_URL}${this.item.image.url}`
+      : ''
   }
 }
 </script>
