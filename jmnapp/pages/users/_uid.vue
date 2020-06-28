@@ -57,13 +57,12 @@ import GridItem from '~/components/jiman/grid-item'
         console.log(`error !! ${err}`)
       })
     return data ? { userJimen: data } : { userJimen: [] }
-  }
-})
-export default class UidJimen extends Vue {
+  },
   validate({ params }) {
     return /^\d+$/.test(params.uid)
   }
-
+})
+export default class UidJimen extends Vue {
   get uid() {
     return this.$route.params.uid
   }

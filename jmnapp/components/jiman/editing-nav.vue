@@ -15,10 +15,11 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
 @Component({})
 export default class EditingNavJiman extends Vue {
+  @Prop({ type: String, required: true }) uid
   @Prop({ type: String, required: true }) id
 
   get editJiman() {
-    return `/useritems/edit/${this.id}`
+    return `/useritems/${this.uid}/edit/${this.id}`
   }
 }
 </script>

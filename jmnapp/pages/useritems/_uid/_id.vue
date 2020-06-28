@@ -7,7 +7,7 @@
       ></v-breadcrumbs>
       <v-row>
         <v-col cols="12" md="10" xl="9">
-          <EditingNav v-if="isMypage" :id="id" />
+          <EditingNav v-if="isMypage" :uid="uid" :id="id" />
           <Content v-model="jimanValue" />
         </v-col>
       </v-row>
@@ -26,19 +26,18 @@ import Content from '~/components/jiman/content'
     Content
   },
   async asyncData(context) {
-    const data = await context.$axios
+    const jiman = await context.$axios
       .$get(`${context.env.ENDPOINT_URL}/api/jimen/${context.params.id}`)
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-    return { jiman: data }
-  }
-})
-export default class IdJimanItems extends Vue {
+    return { jiman }
+  },
   validate({ params }) {
     return /^\d+$/.test(params.uid) && /^\d+$/.test(params.id)
   }
-
+})
+export default class IdUserItemsJiman extends Vue {
   myReview = { star: 3, comment: '' }
   dialog = false
 

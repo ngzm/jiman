@@ -1,13 +1,13 @@
 <template>
   <v-row align="stretch">
     <v-col cols="12">
-      <TopView :item="value" @onJump="onJump" />
+      <TopView :item="value" @jump="onJump" />
     </v-col>
     <v-col cols="12" md="6">
       <Detail :item="value" />
     </v-col>
     <v-col cols="12" md="6">
-      <DetailRating :item="value" @onReview="onReview" />
+      <DetailRating :item="value" @review="onReview" />
     </v-col>
     <RatingDialog
       v-model="dialog"
