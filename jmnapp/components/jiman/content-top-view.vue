@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <template v-if="item.url">
-      <a href="" class="titlelink" @click.stop.prevent="$emit('onJump')">
+      <a href="" class="titlelink" @click.stop.prevent="$emit('jump')">
         <v-img :src="imgsrc" min-height="300px" max-height="580px">
           <v-row
             align="center"

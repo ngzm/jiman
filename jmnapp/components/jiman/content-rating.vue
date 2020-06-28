@@ -27,7 +27,7 @@
         class="font-weight-bold"
         block
         dark
-        @click="$emit('onReview')"
+        @click="$emit('review')"
       >
         お気に入りとかコメントを登録する
         <v-icon>mdi-star</v-icon>

@@ -7,11 +7,15 @@
     </v-row>
     <v-row no-gutters justify="end">
       <v-col cols="auto" class="px-md-4 px-sm-2 xs-1">
-        <v-btn class="info font-weight-bold" @click="submit">
-          送信
+        <v-btn
+          dark
+          class="indigo darken-4 font-weight-bold"
+          @click="$emit('back')"
+        >
+          編集に戻る
         </v-btn>
-        <v-btn class="warning font-weight-bold" @click="back">
-          戻る
+        <v-btn class="info font-weight-bold" @click="$emit('submit')">
+          登録する
         </v-btn>
       </v-col>
     </v-row>
@@ -69,19 +73,19 @@
           <v-card-text class="pt-3 font-weight-bold">
             <h4>アピールポイント2</h4>
             <p class="pa-2 grey darken-2 white--text">
-              {{ !!jiman.point2 ? jiman.point2 : '未入力' }}
+              {{ !!jiman.point2 ? jiman.point2 : '-- 未入力 --' }}
             </p>
           </v-card-text>
           <v-card-text class="pt-3 font-weight-bold">
             <h4>アピールポイント3</h4>
             <p class="pa-2 grey darken-2 white--text">
-              {{ !!jiman.point3 ? jiman.point3 : '未入力' }}
+              {{ !!jiman.point3 ? jiman.point3 : '-- 未入力 --' }}
             </p>
           </v-card-text>
           <v-card-text class="pt-3 font-weight-bold">
             <h4>アピールポイント4</h4>
             <p class="pa-2 grey darken-2 white--text">
-              {{ !!jiman.point4 ? jiman.point4 : '未入力' }}
+              {{ !!jiman.point4 ? jiman.point4 : '-- 未入力 --' }}
             </p>
           </v-card-text>
         </v-card>
@@ -90,46 +94,27 @@
   </div>
 </template>
 <script>
-export default {
-  props: {
-    jiman: {
-      required: true,
-      type: Object
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class ContentConfirm extends Vue {
+  @Prop({ type: Object, required: true }) jiman
+
+  get imagesrc() {
+    return this.imagedata ? this.imagedata : this.image
+  }
+
+  get image() {
+    const image = this.jiman ? this.jiman.image : ''
+    if (image && image.url) {
+      return `${process.env.ENDPOINT_URL}${image.url}`
     }
-  },
-  computed: {
-    imagesrc() {
-      return this.imagedata ? this.imagedata : this.image
-    },
-    image() {
-      const image = this.jiman ? this.jiman.image : ''
-      if (image && image.url) {
-        return `${process.env.ENDPOINT_URL}${image.url}`
-      }
-      return null
-    },
-    imagedata() {
-      const imagedata = this.jiman ? this.jiman.imagedata : null
-      return imagedata && imagedata.base64data ? imagedata.base64data : null
-    },
-    getCategoryName() {
-      return (id) => {
-        if (id) {
-          const category = this.$store.getters.getCategoryById(id)
-          return category ? category.name : 'undefined'
-        } else {
-          return '未設定'
-        }
-      }
-    }
-  },
-  methods: {
-    submit() {
-      this.$emit('onSubmit')
-    },
-    back() {
-      this.$emit('onBack')
-    }
+    return null
+  }
+
+  get imagedata() {
+    const imagedata = this.jiman ? this.jiman.imagedata : null
+    return imagedata && imagedata.base64data ? imagedata.base64data : null
   }
 }
 </script>

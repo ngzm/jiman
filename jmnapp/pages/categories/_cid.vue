@@ -35,13 +35,12 @@ import GridItem from '~/components/jiman/grid-item'
         console.log(`error !! ${err}`)
       })
     return datas ? { jimen: datas } : { jimen: [] }
-  }
-})
-export default class CidJimen extends Vue {
+  },
   validate({ params }) {
     return /^\d+$/.test(params.cid)
   }
-
+})
+export default class CidJimen extends Vue {
   get cid() {
     return this.$route.params.cid
   }
