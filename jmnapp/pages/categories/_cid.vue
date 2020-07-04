@@ -38,7 +38,7 @@ import GridItem from '~/components/jiman/grid-item'
   },
   validate({ params }) {
     return /^\d+$/.test(params.cid)
-  }
+  },
 })
 export default class CidJimen extends Vue {
   get cid() {
@@ -50,13 +50,13 @@ export default class CidJimen extends Vue {
       {
         text: 'Home',
         disabled: false,
-        to: '/'
+        to: '/',
       },
       {
         text: this.getCategoryName,
         disabled: true,
-        to: `/categories/${this.cid}`
-      }
+        to: `/categories/${this.cid}`,
+      },
     ]
   }
 

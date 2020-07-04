@@ -60,7 +60,7 @@ import GridItem from '~/components/jiman/grid-item'
   },
   validate({ params }) {
     return /^\d+$/.test(params.uid)
-  }
+  },
 })
 export default class UidJimen extends Vue {
   get uid() {
@@ -72,13 +72,13 @@ export default class UidJimen extends Vue {
       {
         text: 'Home',
         disabled: false,
-        to: '/'
+        to: '/',
       },
       {
         text: this.isMypage ? 'マイページ' : '作者のページ',
         disabled: true,
-        to: `/users/${this.uid}`
-      }
+        to: `/users/${this.uid}`,
+      },
     ]
   }
 

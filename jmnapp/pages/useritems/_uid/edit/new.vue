@@ -22,7 +22,7 @@ import CompleteDialog from '~/components/jiman-edit/complete-dialog.vue'
   },
   validate({ params }) {
     return /^\d+$/.test(params.uid)
-  }
+  },
 })
 export default class NewEditItemsJiman extends Vue {
   dispDialog = false

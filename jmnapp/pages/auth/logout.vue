@@ -9,12 +9,12 @@
 export default {
   middleware: ['auth'],
   options: {
-    auth: false
+    auth: false,
   },
   methods: {
     showUser() {
       console.log(this.$store.state.auth)
-    }
-  }
+    },
+  },
 }
 </script>

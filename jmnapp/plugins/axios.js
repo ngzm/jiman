@@ -1,4 +1,4 @@
-export default function({ app, store, $axios }) {
+export default function ({ app, store, $axios }) {
   const getAuthStrategy = () => {
     return store.state.auth.strategy
   }
@@ -11,7 +11,7 @@ export default function({ app, store, $axios }) {
         config.headers = {
           ...config.headers,
           'X-AUTH-PROVIDER': getAuthStrategy(),
-          'X-AUTH-USER-SUB': getAuthUserSub()
+          'X-AUTH-USER-SUB': getAuthUserSub(),
         }
       }
       return config

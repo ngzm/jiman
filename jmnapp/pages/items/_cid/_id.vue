@@ -24,7 +24,7 @@ import Content from '~/components/jiman/content'
 @Component({
   components: {
     EditingNav,
-    Content
+    Content,
   },
   async asyncData(context) {
     const jiman = await context.$axios
@@ -36,7 +36,7 @@ import Content from '~/components/jiman/content'
   },
   validate({ params }) {
     return /^\d+$/.test(params.cid) && /^\d+$/.test(params.id)
-  }
+  },
 })
 export default class IdJimanItems extends Vue {
   get jimanValue() {
@@ -64,18 +64,18 @@ export default class IdJimanItems extends Vue {
       {
         text: 'Home',
         disabled: false,
-        to: '/'
+        to: '/',
       },
       {
         text: this.getParentName,
         disabled: false,
-        to: `/categories/${this.cid}`
+        to: `/categories/${this.cid}`,
       },
       {
         text: this.jiman.title,
         disabled: true,
-        to: `/items/${this.cid}/${this.id}`
-      }
+        to: `/items/${this.cid}/${this.id}`,
+      },
     ]
   }
 

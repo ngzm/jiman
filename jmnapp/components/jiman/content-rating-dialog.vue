@@ -56,16 +56,16 @@ export default {
   props: {
     value: {
       required: true,
-      type: Boolean
+      type: Boolean,
     },
     title: {
       default: '',
-      type: String
+      type: String,
     },
     review: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -74,8 +74,8 @@ export default {
       commentRules: [
         (v) =>
           v.length <= this.commentSize ||
-          `${this.commentSize}文字以内で入力してください`
-      ]
+          `${this.commentSize}文字以内で入力してください`,
+      ],
     }
   },
   computed: {
@@ -85,7 +85,7 @@ export default {
       },
       set(flg) {
         this.$emit('input', flg)
-      }
+      },
     },
     star: {
       get() {
@@ -93,7 +93,7 @@ export default {
       },
       set(star) {
         this.$emit('onChange', { ...this.review, star })
-      }
+      },
     },
     comment: {
       get() {
@@ -101,21 +101,21 @@ export default {
       },
       set(comment) {
         this.$emit('onChange', { ...this.review, comment })
-      }
+      },
     },
     authUserName() {
       return this.$store.state.auth.user
         ? this.$store.state.auth.user.name
         : '名無し'
-    }
+    },
   },
   methods: {
     register() {
       if (this.$refs.form.validate()) {
         this.$emit('onRegist')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style></style>

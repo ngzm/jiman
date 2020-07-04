@@ -41,7 +41,7 @@ export default {
   components: {
     CategoryList,
     UserMenu,
-    WelcomeBar
+    WelcomeBar,
   },
   data() {
     return {
@@ -49,13 +49,13 @@ export default {
       drawer: true,
       fixed: false,
       miniVariant: false,
-      title: 'Vuetify.js'
+      title: 'Vuetify.js',
     }
   },
   computed: {
     authenticated() {
       return this.$store.state.auth.loggedIn
-    }
-  }
+    },
+  },
 }
 </script>

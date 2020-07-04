@@ -1,6 +1,6 @@
 export const state = () => ({
   categories: [],
-  loginUser: {}
+  loginUser: {},
 })
 
 export const getters = {
@@ -19,7 +19,7 @@ export const getters = {
       return state.loginUser
     }
     return {}
-  }
+  },
 }
 
 export const mutations = {
@@ -30,7 +30,7 @@ export const mutations = {
     Object.assign(state.loginUser, data)
     console.log('state loginUser')
     console.log(state.loginUser)
-  }
+  },
 }
 
 export const actions = {
@@ -48,5 +48,5 @@ export const actions = {
         console.log(`error !! ${err}`)
       })
     commit('SET_LOGIN_USER', user)
-  }
+  },
 }
