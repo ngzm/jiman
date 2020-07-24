@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      snackbar: true
+      snackbar: true,
     }
   },
   computed: {
@@ -22,7 +22,7 @@ export default {
       },
       set(flg) {
         this.snackbar = flg
-      }
+      },
     },
     message() {
       if (this.authUser) {
@@ -36,13 +36,13 @@ export default {
     },
     authUser() {
       return this.$store.state.auth.user
-    }
+    },
   },
   methods: {
     cancel() {
       this.snackbar = false
-    }
-  }
+    },
+  },
 }
 </script>
 <style></style>

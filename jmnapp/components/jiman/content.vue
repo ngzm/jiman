@@ -32,8 +32,8 @@ import RatingDialog from './content-rating-dialog'
     TopView,
     Detail,
     DetailRating,
-    RatingDialog
-  }
+    RatingDialog,
+  },
 })
 export default class ContentJiman extends Vue {
   @Prop({ type: Object, required: true }) value

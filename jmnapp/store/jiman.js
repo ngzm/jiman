@@ -10,8 +10,8 @@ const defaultJiman = () => {
       point3: '',
       point4: '',
       categories: [],
-      imagedata: { name: '', type: ``, base64data: null }
-    }
+      imagedata: { name: '', type: ``, base64data: null },
+    },
   }
 }
 const defaultImagedata = () => {
@@ -26,13 +26,13 @@ const sendData = (jiman) => {
     point2: jiman.point2,
     point3: jiman.point3,
     point4: jiman.point4,
-    categories: jiman.categories
+    categories: jiman.categories,
   }
   if (jiman.imagedata && jiman.imagedata.base64data) {
     sdata.imagedata = {
       name: jiman.imagedata.name,
       type: jiman.imagedata.type,
-      base64data: jiman.imagedata.base64data.split(',')[1]
+      base64data: jiman.imagedata.base64data.split(',')[1],
     }
   }
   return sdata
@@ -46,7 +46,7 @@ export const mutations = {
   },
   CLEAR_JIMAN(state) {
     Object.assign(state, defaultJiman())
-  }
+  },
 }
 
 export const actions = {
@@ -75,5 +75,5 @@ export const actions = {
       .catch((err) => {
         console.log(`error !! ${err}`)
       })
-  }
+  },
 }

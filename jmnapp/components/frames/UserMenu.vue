@@ -72,13 +72,13 @@ export default {
       else {
         return '/'
       }
-    }
+    },
   },
   methods: {
     logout() {
       this.$router.push('/auth/logoutconfirm')
-    }
-  }
+    },
+  },
 }
 </script>
 <style></style>

@@ -23,7 +23,7 @@ import Content from '~/components/jiman/content'
 @Component({
   components: {
     EditingNav,
-    Content
+    Content,
   },
   async asyncData(context) {
     const jiman = await context.$axios
@@ -35,7 +35,7 @@ import Content from '~/components/jiman/content'
   },
   validate({ params }) {
     return /^\d+$/.test(params.uid) && /^\d+$/.test(params.id)
-  }
+  },
 })
 export default class IdUserItemsJiman extends Vue {
   myReview = { star: 3, comment: '' }
@@ -62,18 +62,18 @@ export default class IdUserItemsJiman extends Vue {
       {
         text: 'Home',
         disabled: false,
-        to: '/'
+        to: '/',
       },
       {
         text: this.isMypage ? 'マイページ' : '作者のページ',
         disabled: false,
-        to: `/users/${this.uid}`
+        to: `/users/${this.uid}`,
       },
       {
         text: this.jiman.title,
         disabled: true,
-        to: `/users/${this.uid}/${this.id}`
-      }
+        to: `/users/${this.uid}/${this.id}`,
+      },
     ]
   }
 

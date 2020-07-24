@@ -152,7 +152,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.length <= this.titleSize ||
-      `${this.titleSize}文字以内で入力してください`
+      `${this.titleSize}文字以内で入力してください`,
   ]
 
   descriptionSize = 250
@@ -161,7 +161,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.length <= this.descriptionSize ||
-      `${this.descriptionSize}文字以内で入力してください`
+      `${this.descriptionSize}文字以内で入力してください`,
   ]
 
   urlSize = 80
@@ -170,7 +170,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.length <= this.titleSize ||
-      `${this.titleSize}文字以内で入力してください`
+      `${this.titleSize}文字以内で入力してください`,
   ]
 
   file = null
@@ -179,7 +179,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.size <= this.imageSize ||
-      `ファイルサイズは 4MB 以内でお願いします`
+      `ファイルサイズは 4MB 以内でお願いします`,
   ]
 
   pointSize = 60
@@ -187,7 +187,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.length <= this.pointSize ||
-      `${this.pointSize}文字以内で入力してください`
+      `${this.pointSize}文字以内で入力してください`,
   ]
 
   point1Rules = [
@@ -195,7 +195,7 @@ export default class ContentForm extends Vue {
     (v) =>
       !v ||
       v.length <= this.pointSize ||
-      `${this.pointSize}文字以内で入力してください`
+      `${this.pointSize}文字以内で入力してください`,
   ]
 
   valid = false
@@ -250,7 +250,7 @@ export default class ContentForm extends Vue {
       imagedata = {
         name: this.file.name,
         type: this.file.type,
-        base64data: data
+        base64data: data,
       }
     }
     this.$emit('input', { imagedata })
@@ -265,7 +265,7 @@ export default class ContentForm extends Vue {
     const ctgs = (this.value ? this.value.categories : []).concat()
     ctgs.splice(0, 1, {
       id: data,
-      name: this.getCategoryName(data)
+      name: this.getCategoryName(data),
     })
     this.$emit('input', { categories: ctgs })
   }

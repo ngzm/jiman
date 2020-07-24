@@ -32,7 +32,7 @@ export default {
         return 'mdi-chart-bubble'
       }
     },
-    ...mapState(['categories'])
-  }
+    ...mapState(['categories']),
+  },
 }
 </script>

@@ -22,9 +22,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import Form from '~/components/jiman-edit/content-form.vue'
 import Confirm from '~/components/jiman-edit/content-confirm.vue'
 
-@Component({
-  components: { Form, Confirm }
-})
+@Component({ components: { Form, Confirm } })
 export default class ContentEdit extends Vue {
   ENUM = { FORM: 1, CONFIRM: 2 }
   mode = 1
